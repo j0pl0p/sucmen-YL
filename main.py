@@ -59,24 +59,41 @@ class ImageSprite(pygame.sprite.Sprite):
     def update(self):
         screen.blit(self.image, (self.x, self.y))
 
+    def process_event(self):
+        pass
+
 
 class ButtonSprite(pygame.sprite.Sprite):
     """ Класс кнопки """
-    def __init__(self, sprite_group, func, x=0, y=0, width=100, height=25, text='Кнопка', font='Comic Sans MS', font_size=20):  # группа спрайтов, x, y, ширина, высота, текст, шрифт (системный), кегль
+    def __init__(self, sprite_group, func, x=0, y=0, width=100, height=25, text='Кнопка', font_name='Comic Sans MS', font_size=20):  # группа спрайтов, x, y, ширина, высота, текст, шрифт (системный), кегль
         super().__init__(sprite_group)
         self.rect = pygame.Rect((x, y, width, height))
         self.x, self.y, self.width, self.height = x, y, width, height
         self.func = func
-        self.text, self.font_name, self.font_size = text, font, font_size
+        self.text, self.font_name, self.font_size = text, font_name, font_size
+
+        font = pygame.font.SysFont(self.font_name, self.font_size)
+        self.image = font.render(self.text, True, (255, 255, 255))
+        screen.blit(self.image, (self.x + 10, self.y + 10))
+        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, self.height), 10)
+
+    def check_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self.on_click(event)
+
+    def on_click(self, event):
+        if self.rect.collidepoint(event.pos):
+            self.func()
+
+    def process_event(self, event):
+        self.check_event(event)
 
     def update(self):
-        font = pygame.font.SysFont(self.font_name, self.font_size)
-        text = font.render(self.text, True, (255, 255, 255))
-        screen.blit(self.text, (self.x + 10, self.y + 10))
-        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, self.height), 1)
+        pass
 
 
 class BaseWindow:
+    """ Базовый класс окна """
     def __init__(self, game):
         self.game = game
         self.objects_group = pygame.sprite.Group()
@@ -88,20 +105,27 @@ class BaseWindow:
         self.objects_group.draw(self.screen)
         self.objects_group.update()
 
+    def process_event(self, event):
+        for object in self.objects_group:
+            object.process_event(event)
+
 
 class MenuWindow(BaseWindow):
+    """ Главное меню """
     def __init__(self, game):
         super().__init__(game)
         background = pygame.transform.scale(load_image('images\mm_background.png'), (WIDTH, HEIGHT))
         logo = ImageSprite(self.objects_group, 'images\logo.png', 200, 10)
-        # btn_newgame = ButtonSprite(self.objects_group, self.new_game, 240, 70, text='Новая игра')
+        btn_newgame = ButtonSprite(self.objects_group, self.new_game, 300, 250, text='Новая игра', font_size=40)
+        btn_settings = ButtonSprite(self.objects_group, self.new_game, 300, 350, text='Настройки', font_size=40)
         screen.blit(background, (0, 0))
 
     def new_game(self):
-        pass
+        print('я кнопка')
 
 
 class Game:
+    """ Игра """
     SCENE_MENU = 0
 
     def __init__(self):
@@ -111,7 +135,6 @@ class Game:
         self.current_scene_index = 0
 
     def all_draw(self):
-        self.screen.fill('black')
         self.scenes[self.current_scene_index].process_draw()
         pygame.display.flip()
 
