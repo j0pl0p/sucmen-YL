@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 import sys
 import os
 
@@ -9,6 +10,7 @@ SIZE = WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption('SUC-MEN')
 clock = pygame.time.Clock()
+TIME_DELTA = clock.tick(FPS) / 1000.0
 
 
 def load_image(name, colorkey=None):
@@ -59,37 +61,48 @@ class ImageSprite(pygame.sprite.Sprite):
     def update(self):
         screen.blit(self.image, (self.x, self.y))
 
-    def process_event(self):
+    def process_event(self, event):
         pass
 
 
-class ButtonSprite(pygame.sprite.Sprite):
+class ButtonObject:
     """ Класс кнопки """
-    def __init__(self, sprite_group, func, x=0, y=0, width=100, height=25, text='Кнопка', font_name='Comic Sans MS', font_size=20):  # группа спрайтов, x, y, ширина, высота, текст, шрифт (системный), кегль
-        super().__init__(sprite_group)
+    def __init__(self, manager, func, x=0, y=0, width=250, height=100, text='Кнопка', font_name='Comic Sans MS', font_size=20):  # группа спрайтов, x, y, ширина, высота, текст, шрифт (системный), кегль
         self.rect = pygame.Rect((x, y, width, height))
         self.x, self.y, self.width, self.height = x, y, width, height
         self.func = func
         self.text, self.font_name, self.font_size = text, font_name, font_size
 
-        font = pygame.font.SysFont(self.font_name, self.font_size)
-        self.image = font.render(self.text, True, (255, 255, 255))
-        screen.blit(self.image, (self.x + 10, self.y + 10))
-        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, self.height), 10)
+        self.button = pygame_gui.elements.UIButton(
+            relative_rect=self.rect,
+            text=self.text,
+            manager=manager,
+            text_kwargs={
+                'button': {
+                    'font': {
+                        'name': font_name,
+                        'size': font_size
+                    }
+                }
+            }
+        )
 
     def check_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self.on_click(event)
+        if event.type == pygame.USEREVENT:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == self.button:
+                    self.on_click()
 
-    def on_click(self, event):
-        if self.rect.collidepoint(event.pos):
-            self.func()
+    def on_click(self):
+        self.func()
 
     def process_event(self, event):
         self.check_event(event)
 
     def update(self):
-        pass
+        self.on_click()
+        screen.blit(self.image, (self.x + 10, self.y + 10))
+        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, self.height), 1)
 
 
 class BaseWindow:
@@ -100,6 +113,7 @@ class BaseWindow:
         self.screen = game.screen
         self.screen.set_alpha(0)
         self.screen.fill('black')
+        self.manager = pygame_gui.UIManager(SIZE)
 
     def process_draw(self):
         self.objects_group.draw(self.screen)
@@ -108,6 +122,7 @@ class BaseWindow:
     def process_event(self, event):
         for object in self.objects_group:
             object.process_event(event)
+        self.manager.process_events(event)
 
 
 class MenuWindow(BaseWindow):
@@ -116,8 +131,8 @@ class MenuWindow(BaseWindow):
         super().__init__(game)
         background = pygame.transform.scale(load_image('images\mm_background.png'), (WIDTH, HEIGHT))
         logo = ImageSprite(self.objects_group, 'images\logo.png', 200, 10)
-        btn_newgame = ButtonSprite(self.objects_group, self.new_game, 300, 250, text='Новая игра', font_size=40)
-        btn_settings = ButtonSprite(self.objects_group, self.new_game, 300, 350, text='Настройки', font_size=40)
+        btn_newgame = ButtonObject(self.manager, self.new_game, 300, 250, text='Новая игра', font_size=40)
+        btn_settings = ButtonObject(self.manager, self.new_game, 300, 350, text='Настройки', font_size=40)
         screen.blit(background, (0, 0))
 
     def new_game(self):
@@ -138,9 +153,19 @@ class Game:
         self.scenes[self.current_scene_index].process_draw()
         pygame.display.flip()
 
+    def all_event(self, event):
+        self.scenes[self.current_scene_index].process_event(event)
+        pygame.display.flip()
+
     def frame(self):
         while not self.game_over:
-            self.all_draw()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    terminate()
+                self.all_draw()
+                self.all_event(event)
+            self.scenes[self.current_scene_index].manager.update(TIME_DELTA)
+            self.scenes[self.current_scene_index].manager.draw_ui(self.scenes[self.current_scene_index].screen)
             clock.tick(FPS)
 
     def exit_game(self):
