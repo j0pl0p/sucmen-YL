@@ -3,6 +3,9 @@ import pygame_gui
 import sys
 import os
 
+from data.scenes.main_menu import MenuWindow
+from data.scenes.settings import SettingsWindow
+
 pygame.init()
 
 FPS = 60
@@ -50,5 +53,66 @@ def terminate():
 
 class Game:
     """ Игра """
+    size = width, height = 800, 600
+    WINDOW_MENU = 0
+    WINDOW_SETTINGS = 1
+    current_window_index = WINDOW_MENU
+
     def __init__(self):
-        pass
+        self.screen = pygame.display.set_mode(self.size)
+        self.game_over = False
+        self.windows = [
+            MenuWindow(self),
+            SettingsWindow(self)
+        ]
+
+    @staticmethod
+    def exit_button_pressed(event):
+        return event.type == pygame.QUIT
+
+    def process_exit_events(self, event):
+        if Game.exit_button_pressed(event):
+            self.exit_game()
+
+    def process_all_events(self):
+        for event in pygame.event.get():
+            self.process_exit_events(event)
+            self.windows[self.current_window_index].process_event(event)
+
+    def process_all_logic(self):
+        self.windows[self.current_window_index].process_logic()
+
+    def set_window(self, index):
+        self.windows[self.current_window_index].on_deactivate()
+        self.current_window_index = index
+        self.windows[self.current_window_index].on_activate()
+
+    def process_all_draw(self):
+        self.screen.fill((0, 0, 0))
+        self.windows[self.current_window_index].process_draw()
+        pygame.display.flip()
+
+    def main_loop(self):
+        while not self.game_over:
+            self.process_all_events()
+            self.process_all_logic()
+            self.process_all_draw()
+            pygame.time.wait(10)
+
+    def exit_game(self):
+        print('Bye bye')
+        self.game_over = True
+
+
+def main():
+    pygame.mixer.pre_init(44100, -16, 1, 2048)
+    pygame.mixer.init()
+    pygame.init()
+    pygame.font.init()
+    game = Game()
+    game.main_loop()
+    sys.exit()
+
+
+if __name__ == '__main__':
+    main()
