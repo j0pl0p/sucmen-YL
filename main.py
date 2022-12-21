@@ -1,10 +1,9 @@
 import pygame
-import pygame_gui
 import sys
 import os
 
-from data.scenes.main_menu import MenuWindow
-from data.scenes.settings import SettingsWindow
+from sucmen.scenes.main_menu import MenuWindow
+from sucmen.scenes.settings import SettingsWindow
 
 pygame.init()
 
