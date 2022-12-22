@@ -1,8 +1,8 @@
 import pygame
-from data.scenes.base import BaseWindow
+from scenes.base import BaseWindow
 
 
 class SettingsWindow(BaseWindow):
     """ Окно настроек """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game):
+        super().__init__(game)
