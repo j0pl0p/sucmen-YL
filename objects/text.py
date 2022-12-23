@@ -11,7 +11,7 @@ class TextObject(DrawableObject):
         self.y = y
         if font:
             self.size = 22 if size is None else size
-            self.font = pygame.font.Font(font, self.size)
+            self.font = pygame.font.SysFont(font, self.size)
         else:
             self.size = 30 if size is None else size
             self.font = pygame.font.SysFont('Comic Sans MS', self.size, True)

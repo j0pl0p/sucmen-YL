@@ -30,5 +30,5 @@ class MenuWindow(BaseWindow):
         pass
 
     def open_settings(self):
-        pass
+        self.game.set_window(self.game.WINDOW_SETTINGS)
 
