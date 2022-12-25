@@ -5,6 +5,10 @@ import os
 
 from scenes.main_menu import MenuWindow
 from scenes.settings import SettingsWindow
+from scenes.game import GameWindow
+from scenes.game_over import GameOverWindow
+
+from system.score import Score
 
 pygame.init()
 
@@ -56,14 +60,19 @@ class Game:
     size = width, height = 800, 600
     WINDOW_MENU = 0
     WINDOW_SETTINGS = 1
+    WINDOW_GAME = 2
+    WINDOW_GAMEOVER = 3
     current_window_index = WINDOW_MENU
 
     def __init__(self):
         self.screen = pygame.display.set_mode(self.size)
+        self.score = Score()
         self.game_over = False
         self.windows = [
             MenuWindow(self),
-            SettingsWindow(self)
+            SettingsWindow(self),
+            GameWindow(self, self.score),
+            GameOverWindow(self)
         ]
 
     @staticmethod
