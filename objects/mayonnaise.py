@@ -4,7 +4,7 @@ from objects.image import ImageObject
 
 class Mayo(ImageObject):
     POINTS = 10
-    filename = 'images/mayo.png'
+    filename = 'data/images/mayo.png'
     CELL_WIDTH = 18
 
     def __init__(self, game, x=0, y=0):
@@ -24,7 +24,7 @@ class Mayo(ImageObject):
 
 class Viagra(ImageObject):
     POINTS = 50
-    filename = 'images/drug.png'
+    filename = 'data/images/drug.png'
     CELL_WIDTH = 18
 
     def __init__(self, game, x=0, y=0):

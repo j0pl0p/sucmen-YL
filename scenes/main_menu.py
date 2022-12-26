@@ -27,7 +27,7 @@ class MenuWindow(BaseWindow):
         self.game.screen.blit(self.surface, (0, 0))
 
     def start_game(self):
-        pass
+        self.game.set_window(self.game.WINDOW_GAME)
 
     def open_settings(self):
         self.game.set_window(self.game.WINDOW_SETTINGS)

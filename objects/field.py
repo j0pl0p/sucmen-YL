@@ -35,9 +35,9 @@ class Field(DrawableObject):
                         row.append(cell_classname(game=self.game,
                                                   x=self.rect.x + self.CELL_WIDTH * col_index,
                                                   y=self.rect.y + self.CELL_WIDTH * row_index))
-                    else:
-                        print(f'Файл {self.map_filename} содержит недопустимые символы!')
-                        sys.exit()
+                    # else:
+                    #     print(f'Файл {self.map_filename} содержит недопустимые символы!')
+                    #     sys.exit()
                     col_index += 1
                 row_index += 1
                 self.field.append(row)
