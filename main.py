@@ -4,6 +4,7 @@ import sys
 import os
 
 from scenes.main_menu import MenuWindow
+from scenes.music_select import MorgenWindow
 from scenes.settings import SettingsWindow
 from scenes.game import GameWindow
 from scenes.game_over import GameOverWindow
@@ -62,6 +63,7 @@ class Game:
     WINDOW_SETTINGS = 1
     WINDOW_GAME = 2
     WINDOW_GAMEOVER = 3
+    WINDOW_MORGEN = 4
     current_window_index = WINDOW_MENU
 
     def __init__(self):
@@ -72,7 +74,8 @@ class Game:
             MenuWindow(self),
             SettingsWindow(self),
             GameWindow(self, self.score),
-            GameOverWindow(self)
+            GameOverWindow(self),
+            MorgenWindow(self)
         ]
 
     @staticmethod
