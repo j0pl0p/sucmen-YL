@@ -4,7 +4,7 @@ from objects.image import ImageObject
 from objects.field import Field
 from objects.player import Player
 from objects.text import TextObject
-from objects.monsters.monsters import Larry, Kissy
+from objects.monsters.monsters import Larry, Kissy, Huggy, Wunk
 
 
 class GameWindow(BaseWindow):
@@ -17,7 +17,9 @@ class GameWindow(BaseWindow):
         self.objects.append(self.field)
         self.player = Player(self.game, self.field, 18 * 15, 18 * 24)
         self.monsters = [Larry(self.game, self.field),
-                         Kissy(self.game, self.field)]
+                         Kissy(self.game, self.field),
+                         Huggy(self.game, self.field),
+                         Wunk(self.game, self.field)]
         self.objects += self.monsters
         self.objects.append(self.player)
         self.score = score
