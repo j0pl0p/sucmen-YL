@@ -4,6 +4,7 @@ from objects.image import ImageObject
 from objects.field import Field
 from objects.player import Player
 from objects.text import TextObject
+from objects.monsters.monsters import Larry, Kissy, Huggy, Wunk
 
 
 class GameWindow(BaseWindow):
@@ -15,16 +16,33 @@ class GameWindow(BaseWindow):
         self.field = Field(self.game, 10, 10, 'maps/default.txt')
         self.objects.append(self.field)
         self.player = Player(self.game, self.field, 18 * 15, 18 * 24)
+        self.monsters = [Larry(self.game, self.field),
+                         Kissy(self.game, self.field),
+                         Huggy(self.game, self.field),
+                         Wunk(self.game, self.field)]
+        self.objects += self.monsters
         self.objects.append(self.player)
         self.score = score
+        self.huggy_bounty = 200
 
     def process_logic(self):
         if not self.start:
             return
         super().process_logic()
+        # проверка на мутантов
+        for huggy in self.monsters:
+            if huggy.collide_with(self.player):
+                if not huggy.frightened_is_active:
+                    self.player.reset_position()
+                    for m in self.monsters:
+                        m.reset()
+                else:
+                    huggy.reset()
+                    self.score.increase_on(self.huggy_bounty)
+                    self.huggy_bounty *= 2
         # условие победы
         if self.field.seeds_count == 0:
-            self.game.set_scene(self.game.WINDOW_GAMEOVER)
+            self.game.set_window(self.game.WINDOW_GAMEOVER)
             self.reset()
 
     def process_event(self, event):
@@ -56,4 +74,6 @@ class GameWindow(BaseWindow):
         self.score.reset()
         self.field.load_map()
         self.player.reset_position()
+        for m in self.monsters:
+            m.reset()
 
