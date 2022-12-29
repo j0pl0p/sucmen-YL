@@ -159,6 +159,8 @@ class Monster(ImageObject):
                 self.image = pygame.transform.scale(self.image, (18, 18))
                 self.frightened_is_active = False
                 self.game.windows[self.game.WINDOW_GAME].ghost_bounty = 200
+                player = self.game.windows[self.game.current_window_index].player
+                player.image = pygame.image.load('data/images/player/right/1.png')
             else:
                 self.frightened_remain = int((datetime.now() - self.state_change_time).seconds) + \
                                          self.CHANGE_STATE_DELTA[self.FRIGHTENED] // 1000 - 1
