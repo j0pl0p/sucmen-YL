@@ -33,7 +33,7 @@ class SettingsWindow(BaseWindow):
         pass
 
     def open_editor(self):
-        pass
+        self.game.set_window(self.game.WINDOW_LEVELEDITOR)
 
     def back(self):
         self.game.set_window(self.game.WINDOW_MENU)
