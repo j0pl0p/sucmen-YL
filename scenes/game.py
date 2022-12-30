@@ -11,9 +11,9 @@ class GameWindow(BaseWindow):
     """ Окно с игрой """
     start = False
 
-    def __init__(self, game, score):
+    def __init__(self, game, score, map_path='maps/default.txt'):
         super().__init__(game)
-        self.field = Field(self.game, 10, 10, 'maps/default.txt')
+        self.field = Field(self.game, 10, 10, map_path)
         self.objects.append(self.field)
         self.player = Player(self.game, self.field, 18 * 15, 18 * 24)
         self.monsters = [Larry(self.game, self.field),

@@ -1,3 +1,5 @@
+import pprint
+
 import pygame
 from objects.base import DrawableObject
 from objects.wall import Wall, Empty, TeleportWall
@@ -134,3 +136,12 @@ class Board(DrawableObject):
 
     def clear_map(self):
         self.boardfile = copy.deepcopy(self.DEFAULT_MAP)
+
+    def set_map(self, file):
+        new_map = []
+        for line in file.readlines():
+            new_map.append(line.rstrip())
+        self.boardfile = new_map
+
+    def get_seed(self):
+        return sum(line.count('2') for line in self.boardfile)
