@@ -76,9 +76,9 @@ class Board(DrawableObject):
             if event.button == 1:
                 cell = self.get_cell(event.pos)
                 self.on_click(cell)
-            elif event.button == 2:
+            elif event.button == 3:
                 cell = self.get_cell(event.pos)
-                self.on_click(cell, mode=2)
+                self.on_click(cell, mode=3)
 
     def get_cell(self, pos):
         if self.rect.collidepoint(pos):
@@ -92,7 +92,7 @@ class Board(DrawableObject):
             cx, cy = cell
             if not self.is_editable(cx, cy):
                 return
-            if mode == 2 or self.MODE == 'empty':
+            if mode == 3 or self.MODE == 'empty':
                 self.boardfile[cy][cx] = '0'
             elif self.MODE == 'wall':
                 self.boardfile[cy][cx] = '1'

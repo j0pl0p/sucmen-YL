@@ -12,7 +12,7 @@ class LevelEditorWindow(BaseWindow):
         super().__init__(game)
 
         self.board = Board(game, 10, 10)
-        name = TextObject(game, 655, 20, 'leVelEditor v0.001', 'white', size=25 )
+        name = TextObject(game, 655, 20, 'leVelEditor v0.002', 'white', size=25 )
         btn_empty = ButtonObject(game, 600, 100, 125, 50, 'black', self.change_to_empty, 'Пустое поле')
         btn_wall = ButtonObject(game, 600, 150, 125, 50, 'black', self.change_to_wall, 'Стена')
         btn_mayo = ButtonObject(game, 600, 200, 125, 50, 'black', self.change_to_mayo, 'МайонеZ')
@@ -20,6 +20,7 @@ class LevelEditorWindow(BaseWindow):
         btn_save = ButtonObject(game, 600, 350, 125, 50, 'black', self.save_map, 'Сохранить')
         btn_clear = ButtonObject(game, 600, 400, 125, 50, 'black', self.clear_map, 'Очистить')
         btn_back = ButtonObject(game, 600, 525, 125, 50, 'black', self.back, '< Назад')
+        # TODO: Загрузка уже существующих файлов, переход на окно игры
 
         self.objects.extend([self.board, name,
                              btn_empty,
