@@ -38,3 +38,6 @@ class TeleportWall(Wall):
     def collision_list(self, objects):
         return self.rect.collidelist(objects)
 
+    def process_draw(self):
+        pygame.draw.rect(self.game.screen, '#000000', self.rect, 0)
+

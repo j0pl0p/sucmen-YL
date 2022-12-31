@@ -61,8 +61,8 @@ class GameWindow(BaseWindow):
                            'Нажмите любую клавишу чтобы продолжить', pygame.Color('red'))
         text1.process_draw()
         text2.process_draw()
-        pygame.draw.rect(self.game.screen, 'black', (10, 18 * 13 + 10, 36, 54))
-        pygame.draw.rect(self.game.screen, 'black', (26 * 18 + 10, 18 * 13 + 10, 36, 54))
+        # pygame.draw.rect(self.game.screen, 'black', (10, 18 * 13 + 10, 36, 54))
+        # pygame.draw.rect(self.game.screen, 'black', (26 * 18 + 10, 18 * 13 + 10, 36, 54))
         if not self.start:
             text3.process_draw()
 
