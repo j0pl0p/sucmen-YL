@@ -14,11 +14,11 @@ class ButtonsCollection:
         width, height = self.game.width, self.game.height
         scale = width / 800 * 1.5
 
-        arrows = new_button(width / 2 + 40 * scale, 75, 'data/images/morgen/ice_p.png',
-                            'data/images/morgen/ice.png', scale, self.function_arrows)
-        wasd = new_button(width / 2 - 250 * scale / 2 - 100, 75, 'data/images/morgen/cadillac_p.png',
-                          'data/images/morgen/cadillac.png', scale / 2, self.function_wasd)
-        arrows.connect(wasd)
+        morgen = new_button(width / 2 + 40 * scale, 75, 'data/images/morgen/ice_p.png',
+                            'data/images/morgen/ice.png', scale, self.function_ice)
+        cadillac = new_button(width / 2 - 250 * scale / 2 - 100, 75, 'data/images/morgen/cadillac_p.png',
+                          'data/images/morgen/cadillac.png', scale / 2, self.function_cadillac)
+        morgen.connect(cadillac)
 
         mus_button = new_checkmark(30, height * 0.7, 'data/images/system/ok.png',
                                    scale, 'музыка вкл/выкл', self.function_checkmark_music)
@@ -27,18 +27,18 @@ class ButtonsCollection:
 
         back_button = BackButton(5, 20, self.game, self.function_back, text='Принять')
         back_button.padding = 150
-        buttons = [wasd, arrows, mus_button, sound_button, back_button]
+        buttons = [cadillac, morgen, mus_button, sound_button, back_button]
         return buttons
 
     def function_back(self):
         self.game.set_window(self.game.WINDOW_MENU)
         self.game.settings.write_to_file()
 
-    def function_wasd(self):
-        pass
+    def function_cadillac(self):
+        self.game.settings.song_change(self.game.settings.cadillac)
 
-    def function_arrows(self):
-        pass
+    def function_ice(self):
+        self.game.settings.song_change(self.game.settings.ice)
 
     def function_checkmark_music(self):
         self.game.settings.music_change()
@@ -47,7 +47,10 @@ class ButtonsCollection:
         self.game.settings.sound_change()
 
     def prev_settings(self):
-        pass
+        self.buttons[0].switch = not self.game.settings.song
+        self.buttons[1].switch = self.game.settings.song
+        self.buttons[2].switch = self.game.settings.music
+        self.buttons[3].switch = self.game.settings.sound
 
 
 def new_button(x, y, image_path, pressed_image_path, scale, function):

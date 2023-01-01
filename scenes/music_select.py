@@ -1,9 +1,6 @@
 import pygame
 
-from buttons.back_button import BackButton
 from buttons.buttons_collection import ButtonsCollection
-from objects.button import ButtonObject
-from objects.text import TextObject
 from scenes.base import BaseWindow
 
 

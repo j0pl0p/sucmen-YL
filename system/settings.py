@@ -11,8 +11,11 @@ SAVE_PATH = 'data.txt'
 
 
 class Settings:
+    ice = 1
+    cadillac = 0
     save_file = SETTINGS_PATH
     DEFAULT_SETTINGS = {
+        'song': 0,
         'music': True,
         'sound': True,
     }
@@ -26,6 +29,10 @@ class Settings:
 
     def __del__(self):
         self.write_to_file()
+
+    @property
+    def song(self):
+        return self.storage['song']
 
     @property
     def music(self):
@@ -44,3 +51,7 @@ class Settings:
 
     def sound_change(self):
         self.storage['sound'] = not self.sound
+
+    def song_change(self, song):
+        self.storage['song'] = song
+
