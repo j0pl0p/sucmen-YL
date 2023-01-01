@@ -32,7 +32,7 @@ class ButtonsCollection:
 
     def function_back(self):
         self.game.set_window(self.game.WINDOW_MENU)
-        # self.game.settings.write_to_file()
+        self.game.settings.write_to_file()
 
     def function_wasd(self):
         pass

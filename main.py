@@ -11,6 +11,7 @@ from scenes.game_over import GameOverWindow
 from scenes.level_editor import LevelEditorWindow
 
 from system.score import Score
+from system.settings import Settings
 
 pygame.init()
 
@@ -71,6 +72,7 @@ class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode(self.size)
         self.score = Score()
+        self.settings = Settings()
         self.game_over = False
         self.windows = [
             MenuWindow(self),
