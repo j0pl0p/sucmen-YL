@@ -76,6 +76,11 @@ class Player(ImageObject):
                         if type(obj) == Mayo:
                             self.game.score.increase_on(Mayo.POINTS)
                             self.field.seeds_count -= 1
+                        else:
+                            self.image = pygame.image.load('data/images/player/rage.png')
+                            for m in self.game.windows[self.game.current_window_index].monsters:
+                                if m.state != m.STAY_IN:
+                                    m.frightened_is_active = True
 
                 if type(obj) == TeleportWall:
                     if self.rect.colliderect(obj.rect):
@@ -102,7 +107,7 @@ class Player(ImageObject):
         self.change_direction()
         self.collide()
         self.step()
-        self.check_borders()  # костыль
+        self.check_borders()
         self.get_current_cell()
 
     def process_event(self, event):

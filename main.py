@@ -8,6 +8,7 @@ from scenes.music_select import MorgenWindow
 from scenes.settings import SettingsWindow
 from scenes.game import GameWindow
 from scenes.game_over import GameOverWindow
+from scenes.level_editor import LevelEditorWindow
 
 from system.score import Score
 
@@ -63,7 +64,8 @@ class Game:
     WINDOW_SETTINGS = 1
     WINDOW_GAME = 2
     WINDOW_GAMEOVER = 3
-    WINDOW_MORGEN = 4
+    WINDOW_LEVELEDITOR = 4
+    WINDOW_MORGEN = 5
     current_window_index = WINDOW_MENU
 
     def __init__(self):
@@ -75,6 +77,7 @@ class Game:
             SettingsWindow(self),
             GameWindow(self, self.score),
             GameOverWindow(self),
+            LevelEditorWindow(self),
             MorgenWindow(self)
         ]
 
