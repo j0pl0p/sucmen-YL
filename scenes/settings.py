@@ -30,7 +30,7 @@ class SettingsWindow(BaseWindow):
         self.game.screen.blit(self.surface, (0, 0))
 
     def open_morgen(self):
-        pass
+        self.game.set_window(self.game.WINDOW_MORGEN)
 
     def open_editor(self):
         self.game.set_window(self.game.WINDOW_LEVELEDITOR)
