@@ -17,7 +17,7 @@ class ButtonsCollection:
         morgen = new_button(width / 2 + 40 * scale, 75, 'data/images/morgen/ice_p.png',
                             'data/images/morgen/ice.png', scale, self.function_ice)
         cadillac = new_button(width / 2 - 250 * scale / 2 - 100, 75, 'data/images/morgen/cadillac_p.png',
-                          'data/images/morgen/cadillac.png', scale / 2, self.function_cadillac)
+                              'data/images/morgen/cadillac.png', scale / 2, self.function_cadillac)
         morgen.connect(cadillac)
 
         mus_button = new_checkmark(30, height * 0.7, 'data/images/system/ok.png',
@@ -65,5 +65,3 @@ def new_checkmark(x, y, img_path, scale, text, function):
     img = pg.image.load(img_path).convert_alpha()
     checkmark = CheckButton(x, y, 30, 30, img, int(scale), text, function)
     return checkmark
-
-
