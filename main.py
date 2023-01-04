@@ -12,6 +12,7 @@ from scenes.level_editor import LevelEditorWindow
 
 from system.score import Score
 from system.settings import Settings
+from system.sound_manager import Sounds
 
 pygame.init()
 
@@ -73,6 +74,7 @@ class Game:
         self.screen = pygame.display.set_mode(self.size)
         self.score = Score()
         self.settings = Settings()
+        self.sounds = Sounds(self)
         self.game_over = False
         self.windows = [
             MenuWindow(self),
