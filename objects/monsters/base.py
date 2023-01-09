@@ -190,30 +190,26 @@ class Monster(ImageObject):
             self.get_next_direction()
         self.process_move()
 
-    def debug_draw(self, color):
-        pygame.draw.rect(self.game.screen, color, (self.aim_x, self.aim_y, 16, 16), 3, 1)
-        pygame.draw.line(self.game.screen, (0, 255, 0), self.rect.center, (self.aim_x, self.aim_y), 1)
-
     def process_draw(self, color=(255, 255, 255)):
         if self.direction and self.state != self.FRIGHTENED:
             self.image = pygame.image.load(self.IMAGES[self.direction])
             self.image = pygame.transform.scale(self.image, (18, 18))
         super(Monster, self).process_draw()
-        for direction in self.get_possible_directions(False):
-            pygame.draw.rect(
-                self.game.screen, 'red',
-                [self.rect.x + self.DEFAULT_DIRECTIONS[direction][0] * self.field.CELL_WIDTH,
-                 self.rect.y + self.DEFAULT_DIRECTIONS[direction][1] * self.field.CELL_WIDTH,
-                 self.field.CELL_WIDTH,
-                 self.field.CELL_WIDTH],
-                2)
-        if self.direction:
-            pygame.draw.rect(
-                self.game.screen, 'yellow',
-                [self.rect.x + self.DEFAULT_DIRECTIONS[self.direction][0] * self.field.CELL_WIDTH + 2,
-                 self.rect.y + self.DEFAULT_DIRECTIONS[self.direction][1] * self.field.CELL_WIDTH + 2,
-                 self.field.CELL_WIDTH - 4,
-                 self.field.CELL_WIDTH - 4],
-                2)
-        if self.aim_x and self.aim_y:
-            pygame.draw.line(self.game.screen, 'green', self.rect.center, [self.aim_x, self.aim_y], 2)
+        # for direction in self.get_possible_directions(False):
+        #     pygame.draw.rect(
+        #         self.game.screen, 'red',
+        #         [self.rect.x + self.DEFAULT_DIRECTIONS[direction][0] * self.field.CELL_WIDTH,
+        #          self.rect.y + self.DEFAULT_DIRECTIONS[direction][1] * self.field.CELL_WIDTH,
+        #          self.field.CELL_WIDTH,
+        #          self.field.CELL_WIDTH],
+        #         2)
+        # if self.direction:
+        #     pygame.draw.rect(
+        #         self.game.screen, 'yellow',
+        #         [self.rect.x + self.DEFAULT_DIRECTIONS[self.direction][0] * self.field.CELL_WIDTH + 2,
+        #          self.rect.y + self.DEFAULT_DIRECTIONS[self.direction][1] * self.field.CELL_WIDTH + 2,
+        #          self.field.CELL_WIDTH - 4,
+        #          self.field.CELL_WIDTH - 4],
+        #         2)
+        # if self.aim_x and self.aim_y:
+        #     pygame.draw.line(self.game.screen, 'green', self.rect.center, [self.aim_x, self.aim_y], 2)

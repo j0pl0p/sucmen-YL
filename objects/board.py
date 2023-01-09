@@ -140,7 +140,7 @@ class Board(DrawableObject):
     def set_map(self, file):
         new_map = []
         for line in file.readlines():
-            new_map.append(line.rstrip())
+            new_map.append(list(line.rstrip()))
         self.boardfile = new_map
 
     def get_seed(self):

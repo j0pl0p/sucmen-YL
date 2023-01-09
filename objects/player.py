@@ -126,15 +126,15 @@ class Player(ImageObject):
     def process_draw(self):
         super(Player, self).process_draw()
 
-        if self.field:
-            pygame.draw.rect(self.game.screen, 'red', [self.current_cell[0] * self.field.CELL_WIDTH + self.field.rect.x,
-                                                       self.current_cell[1] * self.field.CELL_WIDTH + self.field.rect.y,
-                                                       self.field.CELL_WIDTH,
-                                                       self.field.CELL_WIDTH], 2)
-            pygame.draw.rect(self.game.screen, 'yellow', [self.future_cell[0] * self.field.CELL_WIDTH + self.field.rect.x,
-                                                          self.future_cell[1] * self.field.CELL_WIDTH + self.field.rect.y,
-                                                          self.field.CELL_WIDTH,
-                                                          self.field.CELL_WIDTH], 2)
+        # if self.field:
+        #     pygame.draw.rect(self.game.screen, 'red', [self.current_cell[0] * self.field.CELL_WIDTH + self.field.rect.x,
+        #                                                self.current_cell[1] * self.field.CELL_WIDTH + self.field.rect.y,
+        #                                                self.field.CELL_WIDTH,
+        #                                                self.field.CELL_WIDTH], 2)
+        #     pygame.draw.rect(self.game.screen, 'yellow', [self.future_cell[0] * self.field.CELL_WIDTH + self.field.rect.x,
+        #                                                   self.future_cell[1] * self.field.CELL_WIDTH + self.field.rect.y,
+        #                                                   self.field.CELL_WIDTH,
+        #                                                   self.field.CELL_WIDTH], 2)
 
     def get_current_cell(self):
         cell_column = (self.rect.centerx - self.field.rect.x) // self.field.CELL_WIDTH

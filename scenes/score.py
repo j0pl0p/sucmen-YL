@@ -1,5 +1,5 @@
 import pygame
-from data.scenes.base import BaseWindow
+from scenes.base import BaseWindow
 
 
 class ScoreWindow(BaseWindow):
