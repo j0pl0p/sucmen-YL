@@ -74,7 +74,9 @@ class Game:
     WINDOW_ENTERNAME = 7
     current_window_index = WINDOW_MENU
 
-    Sounds.change_volume(0.025)
+    Sounds.change_volume(0.05, channel=Sounds.channel_sound)
+    Sounds.change_volume(0.1, channel=Sounds.channel_rage)
+    Sounds.change_volume(0.1, channel=Sounds.channel_song)
 
     def __init__(self):
         self.screen = pygame.display.set_mode(self.size)

@@ -1,3 +1,5 @@
+import datetime
+
 import pygame
 
 from system.sound_manager import Sounds
@@ -26,7 +28,8 @@ class MenuWindow(BaseWindow):
         self.objects.append(btn_settings)
         self.objects.append(btn_highscores)
 
-        Sounds.play_song('rage')
+        if self.game.settings.music:
+            Sounds.play_song('mainmenu')
 
     def process_draw(self):
         super().process_draw()
@@ -42,8 +45,10 @@ class MenuWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_HIGHSCORE)
 
     def on_activate(self):
-        Sounds.play_song('rage')
+        if self.game.settings.music:
+            Sounds.play_song('mainmenu')
 
     def on_deactivate(self):
-        Sounds.pause()
+        if self.game.settings.music:
+            Sounds.pause()
 

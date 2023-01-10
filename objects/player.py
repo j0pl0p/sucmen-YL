@@ -3,6 +3,7 @@ import pygame
 from objects.image import ImageObject
 from objects.wall import Wall, TeleportWall, Empty
 from objects.mayonnaise import Mayo, Viagra
+from system.sound_manager import Sounds
 
 
 class Player(ImageObject):
@@ -81,11 +82,16 @@ class Player(ImageObject):
                         self.can_move = False
                 if type(obj) == Mayo or type(obj) == Viagra:
                     if self.rect.collidepoint(obj.rect.center):
+                        if self.game.settings.sound:
+                            Sounds.play_sound('eating')
                         self.field.update(i, j, Empty)
                         if type(obj) == Mayo:
                             self.game.score.increase_on(Mayo.POINTS)
                             self.field.seeds_count -= 1
                         else:
+                            if self.game.settings.music:
+                                Sounds.pause(Sounds.channel_song)
+                                Sounds.play_rage()
                             self.image = pygame.image.load('data/images/player/rage.png')
                             for m in self.game.windows[self.game.current_window_index].monsters:
                                 if m.state != m.STAY_IN:
