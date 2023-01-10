@@ -3,48 +3,35 @@ import os
 
 
 class Sounds:
-    sounds = {}
+    songs = {
+        'rage': mixer.Sound('data/sounds/rage.wav')
+    }
+    sounds = {
 
-    def __init__(self, game):
-        for items in os.walk('../data/sounds'):
-            for file in items[2]:
-                self.add_sound(file)
-        self.game = game
-        self.sets = self.game.settings
-        self.mus_switch()
+    }
+    channel_song = 0
+    channel_sound = 1
 
-    def add_sound(self, file):
-        ext = file.split('.')[-1]
-        name = file.replace('.' + ext, '')
-        self.sounds[name] = mixer.Sound('sounds/' + file)
+    @staticmethod
+    def play_song(filename):
+        mixer.Channel(Sounds.channel_song).play(Sounds.songs[filename], loops=-1)
 
-    def mus_change(self, mod=0):
-        if self.sets.music:
-            mixer.music.stop()
-            """
-            if self.game.current_scene == ...:
-                if mod == 0:
-                    mixer.music.load('..')
-                elif mod == 1:
-                    mixer.music.load('..')
-                ...
-                mixer.music.play(-1)
-            elif self.game.current_scene == ''':
-                ... 
-            """
+    @staticmethod
+    def play_sound(filename):
+        mixer.Channel(Sounds.channel_sound).play(Sounds.sounds[filename])
 
-    def stop(self):
-        for sound in self.sounds.values():
-            sound.stop()
-        mixer.music.stop()
+    @staticmethod
+    def is_playing():
+        return mixer.music.get_busy()
 
-    def mus_switch(self):
-        if not self.game.settings.sound:
-            for sound in self.sounds.values():
-                sound.set_volume(0)
-        else:
-            for sound in self.sounds.values():
-                sound.set_volume(0.5)
-        if not self.sets.music:
-            mixer.music.stop()
+    @staticmethod
+    def change_volume(volume=0.025, channel=channel_song):
+        mixer.Channel(channel).set_volume(volume)
 
+    @staticmethod
+    def pause(channel=channel_song):
+        mixer.Channel(channel).pause()
+
+    @staticmethod
+    def unpause(channel=channel_song):
+        mixer.Channel(channel).unpause()

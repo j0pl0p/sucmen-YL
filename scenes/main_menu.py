@@ -1,4 +1,6 @@
 import pygame
+
+from system.sound_manager import Sounds
 from scenes.base import BaseWindow
 from objects.button import ButtonObject
 from objects.image import ImageObject
@@ -24,6 +26,8 @@ class MenuWindow(BaseWindow):
         self.objects.append(btn_settings)
         self.objects.append(btn_highscores)
 
+        Sounds.play_song('rage')
+
     def process_draw(self):
         super().process_draw()
         self.game.screen.blit(self.surface, (0, 0))
@@ -36,4 +40,10 @@ class MenuWindow(BaseWindow):
 
     def open_highscores(self):
         self.game.set_window(self.game.WINDOW_HIGHSCORE)
+
+    def on_activate(self):
+        Sounds.play_song('rage')
+
+    def on_deactivate(self):
+        Sounds.pause()
 

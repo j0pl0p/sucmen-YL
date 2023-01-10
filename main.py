@@ -74,11 +74,12 @@ class Game:
     WINDOW_ENTERNAME = 7
     current_window_index = WINDOW_MENU
 
+    Sounds.change_volume(0.025)
+
     def __init__(self):
         self.screen = pygame.display.set_mode(self.size)
         self.score = Score()
         self.settings = Settings()
-        self.sounds = Sounds(self)
         self.player_name = ''
         self.game_over = False
         self.windows = [
@@ -91,6 +92,7 @@ class Game:
             HighscoreWindow(self, self.score),
             EnterNameWindow(self)
         ]
+
 
     @staticmethod
     def exit_button_pressed(event):
