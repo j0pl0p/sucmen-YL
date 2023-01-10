@@ -3,6 +3,7 @@ from random import randint
 import pygame.transform
 from objects.wall import Wall, TeleportWall
 from objects.image import ImageObject
+from system.sound_manager import Sounds
 
 pygame.init()
 
@@ -155,6 +156,8 @@ class Monster(ImageObject):
                 self.frightened_remain = self.CHANGE_STATE_DELTA[self.FRIGHTENED] // 1000 - 1
             elif (datetime.now() - self.state_change_time).seconds * 1000 >= self.CHANGE_STATE_DELTA[self.state]:
                 self.new_state(self.WANDER)
+                Sounds.stop_rage()
+                Sounds.unpause(Sounds.channel_song)
                 self.game.windows[self.game.current_window_index].player.bad_trip_active = False # removing rage.png from player
                 self.frightened_remain = -1
                 self.image = pygame.image.load(self.filename)

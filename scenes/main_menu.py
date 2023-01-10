@@ -1,4 +1,8 @@
+import datetime
+
 import pygame
+
+from system.sound_manager import Sounds
 from scenes.base import BaseWindow
 from objects.button import ButtonObject
 from objects.image import ImageObject
@@ -24,6 +28,9 @@ class MenuWindow(BaseWindow):
         self.objects.append(btn_settings)
         self.objects.append(btn_highscores)
 
+        if self.game.settings.music:
+            Sounds.play_song('mainmenu')
+
     def process_draw(self):
         super().process_draw()
         self.game.screen.blit(self.surface, (0, 0))
@@ -36,4 +43,12 @@ class MenuWindow(BaseWindow):
 
     def open_highscores(self):
         self.game.set_window(self.game.WINDOW_HIGHSCORE)
+
+    def on_activate(self):
+        if self.game.settings.music:
+            Sounds.play_song('mainmenu')
+
+    def on_deactivate(self):
+        if self.game.settings.music:
+            Sounds.pause()
 

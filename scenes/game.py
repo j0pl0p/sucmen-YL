@@ -5,6 +5,7 @@ from objects.field import Field
 from objects.player import Player
 from objects.text import TextObject
 from objects.monsters.monsters import Larry, Kissy, Huggy, Wunk
+from system.sound_manager import Sounds
 
 
 class GameWindow(BaseWindow):
@@ -69,6 +70,12 @@ class GameWindow(BaseWindow):
     def on_activate(self):
         super().on_activate()
         self.start = False
+        if self.game.settings.music:
+            Sounds.play_song('ice' if self.game.settings.song == 1 else 'cadillac')
+
+    def on_deactivate(self):
+        if self.game.settings.music:
+            Sounds.pause(channel=Sounds.channel_song)
 
     def reset(self):
         self.score.reset()
