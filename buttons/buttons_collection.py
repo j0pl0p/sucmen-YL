@@ -20,10 +20,10 @@ class ButtonsCollection:
                               'data/images/morgen/cadillac.png', scale / 2, self.function_cadillac)
         morgen.connect(cadillac)
 
-        mus_button = new_checkmark(30, height * 0.7, 'data/images/system/ok.png',
-                                   scale, 'музыка вкл/выкл', self.function_checkmark_music)
-        sound_button = new_checkmark(30, height * 0.8, 'data/images/system/ok.png',
-                                     scale, 'звуки вкл/выкл', self.function_checkmark_sound)
+        mus_button = new_checkmark(width * 0.4, height * 0.7, 'data/images/system/ok.png',
+                                   scale, 'Муzыка', self.function_checkmark_music)
+        sound_button = new_checkmark(width * 0.4, height * 0.8, 'data/images/system/ok.png',
+                                     scale, 'Zvуки', self.function_checkmark_sound)
 
         back_button = BackButton(5, 20, self.game, self.function_back, text='Принять')
         back_button.padding = 150
