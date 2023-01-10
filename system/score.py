@@ -23,6 +23,7 @@ class HighScore:
 
     def __init__(self):
         self.highscores = []
+        self.clean_all_results()
         self.load_from_file()
 
     def load_from_file(self):
