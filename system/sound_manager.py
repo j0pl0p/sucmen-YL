@@ -4,7 +4,7 @@ import os
 
 class Sounds:
     songs = {
-        'rage': mixer.Sound('data/sounds/rage.wav')
+        'rage': mixer.Sound('data/sounds/rage.mp3')
     }
     sounds = {
 
