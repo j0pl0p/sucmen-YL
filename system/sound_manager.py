@@ -1,12 +1,12 @@
 import pygame.mixer as mixer
-import pygame
+import os
 
 
 class Sounds:
-    sounds = {'mainmenu': 'data/sounds/mainmenu.wav'}
+    sounds = {}
 
     def __init__(self, game):
-        for items in os.walk("sounds"):
+        for items in os.walk('../data/sounds'):
             for file in items[2]:
                 self.add_sound(file)
         self.game = game
@@ -21,34 +21,17 @@ class Sounds:
     def mus_change(self, mod=0):
         if self.sets.music:
             mixer.music.stop()
-
-            if self.game.current_scene_index == 0:
+            """
+            if self.game.current_scene == ...:
                 if mod == 0:
-                    mixer.music.load('sounds/game_start.wav')
-                    mixer.music.play(1)
+                    mixer.music.load('..')
                 elif mod == 1:
-                    mixer.music.load('sounds/siren.wav')
-                    mixer.music.play(-1)
-                elif mod == 2:
-                    mixer.music.load('sounds/power_pellet.wav')
-                    mixer.music.play(-1)
-
-            elif self.game.current_scene_index == 1:
-                if mod == 0:
-                    mixer.music.load('sounds/siren.wav')
-                elif mod == 1:
-                    mixer.music.load('sounds/power_pellet.wav')
-                elif mod == 2:
-                    mixer.music.load('sounds/game_start.wav')
+                    mixer.music.load('..')
+                ...
                 mixer.music.play(-1)
-
-            elif self.game.current_scene_index == 6:
-                mixer.music.load('sounds/intermission.wav')
-                mixer.music.play(-1)
-
-            elif self.game.current_scene_index == 8:
-                mixer.music.load('sounds/about.wav')
-                mixer.music.play(-1)
+            elif self.game.current_scene == ''':
+                ... 
+            """
 
     def stop(self):
         for sound in self.sounds.values():

@@ -3,6 +3,8 @@ import pygame_gui
 import sys
 import os
 
+from scenes.enter_name import EnterNameWindow
+from scenes.high_scores import HighscoreWindow
 from scenes.main_menu import MenuWindow
 from scenes.music_select import MorgenWindow
 from scenes.settings import SettingsWindow
@@ -12,6 +14,7 @@ from scenes.level_editor import LevelEditorWindow
 
 from system.score import Score
 from system.settings import Settings
+from system.sound_manager import Sounds
 
 pygame.init()
 
@@ -67,12 +70,16 @@ class Game:
     WINDOW_GAMEOVER = 3
     WINDOW_LEVELEDITOR = 4
     WINDOW_MORGEN = 5
+    WINDOW_HIGHSCORE = 6
+    WINDOW_ENTERNAME = 7
     current_window_index = WINDOW_MENU
 
     def __init__(self):
         self.screen = pygame.display.set_mode(self.size)
         self.score = Score()
         self.settings = Settings()
+        self.sounds = Sounds(self)
+        self.player_name = ''
         self.game_over = False
         self.windows = [
             MenuWindow(self),
@@ -80,7 +87,9 @@ class Game:
             GameWindow(self, self.score),
             GameOverWindow(self),
             LevelEditorWindow(self),
-            MorgenWindow(self)
+            MorgenWindow(self),
+            HighscoreWindow(self, self.score),
+            EnterNameWindow(self)
         ]
 
     @staticmethod
