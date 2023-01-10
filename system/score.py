@@ -1,4 +1,5 @@
 import pygame
+import os.path
 
 from system.settings import SAVE_PATH
 
@@ -23,7 +24,9 @@ class HighScore:
 
     def __init__(self):
         self.highscores = []
-        self.clean_all_results()
+        if not os.path.exists(self.SAVE_FILE):
+            with open(self.SAVE_FILE, 'w') as save_file:
+                save_file.write('0\n')
         self.load_from_file()
 
     def load_from_file(self):
