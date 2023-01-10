@@ -149,18 +149,18 @@ class Monster(ImageObject):
         elif self.frightened_is_active:
             if self.state != self.FRIGHTENED:
                 self.new_state(self.FRIGHTENED)
+                self.game.windows[self.game.current_window_index].player.bad_trip_active = True # applying rage.png to player
                 self.image = pygame.image.load(self.filename_frightened)
                 self.image = pygame.transform.scale(self.image, (18, 18))
                 self.frightened_remain = self.CHANGE_STATE_DELTA[self.FRIGHTENED] // 1000 - 1
             elif (datetime.now() - self.state_change_time).seconds * 1000 >= self.CHANGE_STATE_DELTA[self.state]:
                 self.new_state(self.WANDER)
+                self.game.windows[self.game.current_window_index].player.bad_trip_active = False # removing rage.png from player
                 self.frightened_remain = -1
                 self.image = pygame.image.load(self.filename)
                 self.image = pygame.transform.scale(self.image, (18, 18))
                 self.frightened_is_active = False
                 self.game.windows[self.game.WINDOW_GAME].ghost_bounty = 200
-                player = self.game.windows[self.game.current_window_index].player
-                player.image = pygame.image.load('data/images/player/right/1.png')
             else:
                 self.frightened_remain = int((datetime.now() - self.state_change_time).seconds) + \
                                          self.CHANGE_STATE_DELTA[self.FRIGHTENED] // 1000 - 1

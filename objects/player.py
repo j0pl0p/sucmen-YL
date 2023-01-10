@@ -1,5 +1,5 @@
+from datetime import datetime
 import pygame
-
 from objects.image import ImageObject
 from objects.wall import Wall, TeleportWall, Empty
 from objects.mayonnaise import Mayo, Viagra
@@ -17,6 +17,13 @@ class Player(ImageObject):
                'button_up': pygame.K_UP,
                'button_left': pygame.K_LEFT,
                'button_down': pygame.K_DOWN}
+    image_index = 0
+    cur_images = {
+            1: [pygame.image.load(f'data/images/player/right/{i}.png') for i in (1, 2, 3, 2)],
+            2: [pygame.image.load(f'data/images/player/left/{i}.png') for i in (1, 2, 3, 2)],
+            3: [pygame.image.load(f'data/images/player/up/{i}.png') for i in (1, 2, 3, 2)],
+            4: [pygame.image.load(f'data/images/player/down/{i}.png') for i in (1, 2, 3, 2)],
+    }
 
     def __init__(self, game, field, x=0, y=0, direction=RIGHT):
         super().__init__(game)
@@ -27,6 +34,8 @@ class Player(ImageObject):
         self.next_direction = direction
         self.current_cell = [0, 0]
         self.future_cell = [0, 0]
+        self.last_frame_time = datetime.now()
+        self.bad_trip_active = False
 
     def step(self, back=False):
         if not back:
@@ -103,12 +112,27 @@ class Player(ImageObject):
                         return
         self.direction = self.next_direction
 
+    def animation(self):
+        if not self.bad_trip_active:
+            if not self.can_move:
+                self.image = self.cur_images[self.direction][1]
+                return
+            now_time = datetime.now()
+            if (now_time - self.last_frame_time).microseconds > 100000:
+                self.image = self.cur_images[self.direction][self.image_index % 4]
+                self.last_frame_time = datetime.now()
+                self.image_index += 1
+        else:
+            self.image = pygame.image.load('data/images/player/rage.png')
+
     def process_logic(self):
         self.change_direction()
         self.collide()
         self.step()
+        self.animation()
         self.check_borders()
         self.get_current_cell()
+
 
     def process_event(self, event):
         if event.type != pygame.KEYDOWN:
