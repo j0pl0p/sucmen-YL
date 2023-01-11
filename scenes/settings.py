@@ -3,6 +3,7 @@ from scenes.base import BaseWindow
 from objects.button import ButtonObject
 from objects.image import ImageObject
 from objects.text import TextObject
+from system.sound_manager import Sounds
 
 
 class SettingsWindow(BaseWindow):
@@ -37,3 +38,11 @@ class SettingsWindow(BaseWindow):
 
     def back(self):
         self.game.set_window(self.game.WINDOW_MENU)
+
+    def on_activate(self):
+        if self.game.settings.music:
+            Sounds.unpause(channel=Sounds.channel_song)
+
+    def on_deactivate(self):
+        if self.game.settings.music:
+            Sounds.pause(channel=Sounds.channel_song)

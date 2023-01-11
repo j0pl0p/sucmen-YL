@@ -46,9 +46,12 @@ class MenuWindow(BaseWindow):
 
     def on_activate(self):
         if self.game.settings.music:
-            Sounds.play_song('mainmenu')
+            if Sounds.current_song() != 'mainmenu':
+                Sounds.play_song('mainmenu')
+            else:
+                Sounds.unpause(channel=Sounds.channel_song)
 
     def on_deactivate(self):
         if self.game.settings.music:
-            Sounds.pause()
+            Sounds.pause(channel=Sounds.channel_song)
 
