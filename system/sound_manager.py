@@ -9,7 +9,8 @@ class Sounds:
         'mainmenu': mixer.Sound('data/sounds/mainmenu.mp3')
     }
     sounds = {
-        'eating': mixer.Sound('data/sounds/eating.mp3')
+        'eating': mixer.Sound('data/sounds/eating.mp3'),
+        'spears': mixer.Sound('data/sounds/spears.mp3')
     }
     rage = {
         'rage': mixer.Sound('data/sounds/rage.mp3')

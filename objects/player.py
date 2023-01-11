@@ -139,7 +139,6 @@ class Player(ImageObject):
         self.check_borders()
         self.get_current_cell()
 
-
     def process_event(self, event):
         if event.type != pygame.KEYDOWN:
             return
