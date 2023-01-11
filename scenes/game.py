@@ -34,7 +34,7 @@ class GameWindow(BaseWindow):
         for huggy in self.monsters:
             if huggy.collide_with(self.player):
                 if not huggy.frightened_is_active:
-                    self.player.reset_position()
+                    self.game.set_window(self.game.WINDOW_GAMEOVER)
                     for m in self.monsters:
                         m.reset()
                 else:
@@ -53,6 +53,10 @@ class GameWindow(BaseWindow):
         if not self.start:
             if event.type == pygame.KEYDOWN:
                 self.start = True
+        if event.key == pygame.K_ESCAPE:
+            self.game.set_window(self.game.WINDOW_PAUSE)
+        if event.key == pygame.K_p:
+            self.game.set_window(self.game.WINDOW_PAUSE)
 
     def process_draw(self):
         super().process_draw()
@@ -71,11 +75,8 @@ class GameWindow(BaseWindow):
         super().on_activate()
         self.start = False
         if self.game.settings.music:
-            Sounds.play_song('ice' if self.game.settings.song == 1 else 'cadillac')
-
-    def on_deactivate(self):
-        if self.game.settings.music:
-            Sounds.pause(channel=Sounds.channel_song)
+            if Sounds.current_song() not in ['ice', 'cadillac']:
+                Sounds.play_song('ice' if self.game.settings.song == 1 else 'cadillac')
 
     def reset(self):
         self.score.reset()
