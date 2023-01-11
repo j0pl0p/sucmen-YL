@@ -9,6 +9,8 @@ from objects.text import TextObject
 import tkinter.filedialog
 import os
 
+from system.sound_manager import Sounds
+
 
 class LevelEditorWindow(BaseWindow):
     """ Окно редактора уровня """
@@ -77,3 +79,11 @@ class LevelEditorWindow(BaseWindow):
             self.board.save_map(temp)
         self.game.windows[self.game.WINDOW_GAME] = GameWindow(self.game, self.game.score, 'maps/temp.txt')
         self.game.set_window(self.game.WINDOW_GAME)
+
+    def on_activate(self):
+        if self.game.settings.music:
+            Sounds.unpause(channel=Sounds.channel_song)
+
+    def on_deactivate(self):
+        if self.game.settings.music:
+            Sounds.pause(channel=Sounds.channel_song)

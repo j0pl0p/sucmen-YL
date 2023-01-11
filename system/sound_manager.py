@@ -17,10 +17,16 @@ class Sounds:
     channel_song = 0
     channel_sound = 1
     channel_rage = 2
+    __cur_song = 'mainmenu'
+
+    @staticmethod
+    def current_song():
+        return Sounds.__cur_song
 
     @staticmethod
     def play_song(filename, loops=-1):
         mixer.Channel(Sounds.channel_song).play(Sounds.songs[filename], loops=loops)
+        Sounds.__current_song = filename
 
     @staticmethod
     def play_sound(filename):
@@ -29,6 +35,7 @@ class Sounds:
     @staticmethod
     def play_rage():
         mixer.Channel(Sounds.channel_rage).play(Sounds.rage['rage'])
+        Sounds.__current_song = 'rage'
 
     @staticmethod
     def stop_rage():

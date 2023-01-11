@@ -4,6 +4,7 @@ from objects.button import ButtonObject
 from objects.text import TextObject
 from scenes.base import BaseWindow
 from system.score import HighScore
+from system.sound_manager import Sounds
 
 BLACK = pygame.color.Color(0, 0, 0)
 RED = pygame.color.Color(255, 0, 0)
@@ -51,3 +52,11 @@ class HighscoreWindow(BaseWindow):
             return
         if event.key == pygame.K_ESCAPE:
             self.game.set_window(self.game.WINDOW_MENU)
+
+    def on_activate(self):
+        if self.game.settings.music:
+            Sounds.unpause(channel=Sounds.channel_song)
+
+    def on_deactivate(self):
+        if self.game.settings.music:
+            Sounds.pause(channel=Sounds.channel_song)
