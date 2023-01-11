@@ -24,5 +24,6 @@ class PauseWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_GAME)
 
     def quit(self):
-        Sounds.stop_rage()
+        if Sounds.current_song() == 'rage':
+            Sounds.stop_rage()
         self.game.set_window(self.game.WINDOW_MENU)
