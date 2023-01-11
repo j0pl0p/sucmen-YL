@@ -23,5 +23,4 @@ class PauseWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_GAME)
 
     def quit(self):
-        self.game.windows[self.game.WINDOW_GAME].reset()
         self.game.set_window(self.game.WINDOW_MENU)

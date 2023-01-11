@@ -34,7 +34,7 @@ class GameWindow(BaseWindow):
         for huggy in self.monsters:
             if huggy.collide_with(self.player):
                 if not huggy.frightened_is_active:
-                    self.player.reset_position()
+                    self.game.set_window(self.game.WINDOW_GAMEOVER)
                     for m in self.monsters:
                         m.reset()
                 else:

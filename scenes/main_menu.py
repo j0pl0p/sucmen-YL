@@ -2,6 +2,7 @@ import datetime
 
 import pygame
 
+from scenes.game import GameWindow
 from system.sound_manager import Sounds
 from scenes.base import BaseWindow
 from objects.button import ButtonObject
@@ -45,6 +46,8 @@ class MenuWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_HIGHSCORE)
 
     def on_activate(self):
+        self.game.score.reset()
+        self.game.windows[self.game.WINDOW_GAME] = GameWindow(self.game, self.game.score)
         if self.game.settings.music:
             if Sounds.current_song() != 'mainmenu':
                 Sounds.play_song('mainmenu')
