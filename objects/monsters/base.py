@@ -157,7 +157,8 @@ class Monster(ImageObject):
             elif (datetime.now() - self.state_change_time).seconds * 1000 >= self.CHANGE_STATE_DELTA[self.state]:
                 self.new_state(self.WANDER)
                 Sounds.stop_rage()
-                Sounds.unpause(Sounds.channel_song)
+                if self.game.settings.music:
+                    Sounds.unpause(Sounds.channel_song)
                 self.game.windows[self.game.current_window_index].player.bad_trip_active = False # removing rage.png from player
                 self.frightened_remain = -1
                 self.image = pygame.image.load(self.filename)

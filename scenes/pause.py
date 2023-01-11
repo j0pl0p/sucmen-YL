@@ -3,6 +3,7 @@ import pygame
 from objects.button import ButtonObject
 from objects.text import TextObject
 from scenes.base import BaseWindow
+from system.sound_manager import Sounds
 
 
 class PauseWindow(BaseWindow):
@@ -23,4 +24,6 @@ class PauseWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_GAME)
 
     def quit(self):
+        Sounds.stop_rage()
+        Sounds.unpause(channel=Sounds.channel_song)
         self.game.set_window(self.game.WINDOW_MENU)
