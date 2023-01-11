@@ -39,6 +39,8 @@ class GameWindow(BaseWindow):
                         m.reset()
                 else:
                     huggy.reset()
+                    if self.game.settings.sound:
+                        Sounds.play_sound('spears')
                     self.score.increase_on(self.huggy_bounty)
                     self.huggy_bounty *= 2
         # условие победы
