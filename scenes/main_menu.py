@@ -49,7 +49,6 @@ class MenuWindow(BaseWindow):
         self.game.score.reset()
         self.game.windows[self.game.WINDOW_GAME] = GameWindow(self.game, self.game.score)
         if self.game.settings.music:
-            print(Sounds.current_song())
             if Sounds.current_song() != 'mainmenu':
                 Sounds.play_song('mainmenu')
         else:

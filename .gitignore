@@ -2,3 +2,5 @@
 venv/
 data.txt
 settings.json
+maps/temp.txt
+maps/map*.txt
