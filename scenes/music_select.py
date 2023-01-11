@@ -25,12 +25,3 @@ class MorgenWindow(BaseWindow):
         super().process_draw()
         for btn in self.buttons.buttons:
             btn.draw(self.screen)
-
-    def on_activate(self):
-        if self.game.settings.music:
-            Sounds.unpause(channel=Sounds.channel_song)
-
-    def on_deactivate(self):
-        if self.game.settings.music:
-            Sounds.pause(channel=Sounds.channel_song)
-
