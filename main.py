@@ -1,5 +1,4 @@
 import pygame
-import pygame_gui
 import sys
 import os
 
@@ -12,6 +11,7 @@ from scenes.settings import SettingsWindow
 from scenes.game import GameWindow
 from scenes.game_over import GameOverWindow
 from scenes.level_editor import LevelEditorWindow
+from scenes.death_anim import DeathAnimationWindow
 
 from system.score import Score
 from system.settings import Settings
@@ -74,6 +74,7 @@ class Game:
     WINDOW_HIGHSCORE = 6
     WINDOW_ENTERNAME = 7
     WINDOW_PAUSE = 8
+    WINDOW_DEATH = 9
     current_window_index = WINDOW_MENU
 
     Sounds.change_volume(0.05, channel=Sounds.channel_sound)
@@ -95,7 +96,8 @@ class Game:
             MorgenWindow(self),
             HighscoreWindow(self, self.score),
             EnterNameWindow(self),
-            PauseWindow(self)
+            PauseWindow(self),
+            DeathAnimationWindow(self)
         ]
 
     @staticmethod

@@ -8,7 +8,7 @@ from objects.image import ImageObject
 
 
 class GameOverWindow(BaseWindow):
-    """ Конец игры! """
+    """ Ввод имени для таблицы рекордов """
     text_format = 'Game over ({})'
     seconds_to_end = 3
 

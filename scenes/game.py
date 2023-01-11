@@ -34,7 +34,7 @@ class GameWindow(BaseWindow):
         for huggy in self.monsters:
             if huggy.collide_with(self.player):
                 if not huggy.frightened_is_active:
-                    self.game.set_window(self.game.WINDOW_GAMEOVER)
+                    self.game.set_window(self.game.WINDOW_DEATH)
                     for m in self.monsters:
                         m.reset()
                 else:
@@ -44,7 +44,7 @@ class GameWindow(BaseWindow):
         # условие победы
         if self.field.seeds_count == 0:
             self.game.set_window(self.game.WINDOW_GAMEOVER)
-            self.reset()
+            # self.reset()
 
     def process_event(self, event):
         super().process_event(event)
