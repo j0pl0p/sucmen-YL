@@ -7,6 +7,7 @@ from scenes.enter_name import EnterNameWindow
 from scenes.high_scores import HighscoreWindow
 from scenes.main_menu import MenuWindow
 from scenes.music_select import MorgenWindow
+from scenes.pause import PauseWindow
 from scenes.settings import SettingsWindow
 from scenes.game import GameWindow
 from scenes.game_over import GameOverWindow
@@ -72,6 +73,7 @@ class Game:
     WINDOW_MORGEN = 5
     WINDOW_HIGHSCORE = 6
     WINDOW_ENTERNAME = 7
+    WINDOW_PAUSE = 8
     current_window_index = WINDOW_MENU
 
     Sounds.change_volume(0.05, channel=Sounds.channel_sound)
@@ -92,9 +94,9 @@ class Game:
             LevelEditorWindow(self),
             MorgenWindow(self),
             HighscoreWindow(self, self.score),
-            EnterNameWindow(self)
+            EnterNameWindow(self),
+            PauseWindow(self)
         ]
-
 
     @staticmethod
     def exit_button_pressed(event):
