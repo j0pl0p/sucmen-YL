@@ -4,7 +4,9 @@ import pygame
 import time
 from objects.text import TextObject
 from scenes.base import BaseWindow
+from scenes.game import GameWindow
 from objects.image import ImageObject
+from system.sound_manager import Sounds
 
 
 class DeathAnimationWindow(BaseWindow):
@@ -12,22 +14,27 @@ class DeathAnimationWindow(BaseWindow):
 
     def __init__(self, game):
         super().__init__(game)
+        self.name = None
+
 
     def update_start_time(self):
         self.time_start = datetime.now()
 
     def process_logic(self):
-        img1 = pygame.image.load('data/images/huggy_anim/huggy(1).png')
+        Sounds.pause()
+        img1 = pygame.image.load(f'data/images/{self.name}_anim/{self.name} (1).png')
         self.game.screen.blit(img1, (0, 67))
         pygame.display.flip()
-        time.sleep(2)
-        img2 = pygame.image.load('data/images/huggy_anim/huggy(2).png')
+        time.sleep(1)
+        if self.game.settings.music:
+            Sounds.play_song('death')
+        img2 = pygame.image.load(f'data/images/{self.name}_anim/{self.name} (2).png')
         self.game.screen.blit(img2, (0, 67))
         pygame.display.flip()
-        time.sleep(2)
-        img3 = pygame.image.load('data/images/huggy_anim/huggy(3).png')
-        img4 = pygame.image.load('data/images/huggy_anim/huggy(4).png')
-        for _ in range(20):
+        time.sleep(3.4)
+        img3 = pygame.image.load(f'data/images/{self.name}_anim/{self.name} (3).png')
+        img4 = pygame.image.load(f'data/images/{self.name}_anim/{self.name} (4).png')
+        for _ in range(10):
             self.game.screen.blit(img3, (0, 67))
             pygame.display.flip()
             time.sleep(0.1)
@@ -35,4 +42,10 @@ class DeathAnimationWindow(BaseWindow):
             pygame.display.flip()
             time.sleep(0.1)
 
+        self.name = None
+        Sounds.pause()
         self.game.set_window(self.game.WINDOW_GAMEOVER)
+
+    def set_killer(self, killer):
+        if killer is not None:
+            self.name = killer

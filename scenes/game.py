@@ -11,6 +11,7 @@ from system.sound_manager import Sounds
 class GameWindow(BaseWindow):
     """ Окно с игрой """
     start = False
+    DEATH_FROM = None
 
     def __init__(self, game, score, map_path='maps/default.txt'):
         super().__init__(game)
@@ -34,6 +35,7 @@ class GameWindow(BaseWindow):
         for huggy in self.monsters:
             if huggy.collide_with(self.player):
                 if not huggy.frightened_is_active:
+                    self.game.windows[self.game.WINDOW_DEATH].set_killer(str(type(huggy).__name__).lower())
                     self.game.set_window(self.game.WINDOW_DEATH)
                     for m in self.monsters:
                         m.reset()

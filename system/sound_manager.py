@@ -6,7 +6,8 @@ class Sounds:
     songs = {
         'cadillac': mixer.Sound('data/sounds/cadillac.mp3'),
         'ice': mixer.Sound('data/sounds/ice.mp3'),
-        'mainmenu': mixer.Sound('data/sounds/mainmenu.mp3')
+        'mainmenu': mixer.Sound('data/sounds/mainmenu.mp3'),
+        'death': mixer.Sound('data/sounds/death.mp3')
     }
     sounds = {
         'eating': mixer.Sound('data/sounds/eating.mp3'),
