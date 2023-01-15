@@ -4,6 +4,7 @@ from buttons.standard_button import StandardButton
 
 
 class BackButton(StandardButton):
+    """ Кнопка "назад" """
     def __init__(self, x, y, game, function=None, text='Back'):
         self.x, self.y = x, y
         self.clicked = False
@@ -15,27 +16,32 @@ class BackButton(StandardButton):
         self.padding = 100
 
     def get_text(self, color):
+        """ Текст """
         font = pg.font.SysFont('arial', 30)
         follow = font.render(self.text, False, color, (0, 0, 0))
         return follow
 
     def draw_button(self, screen, color):
+        """ Отрисовка """
         pg.draw.polygon(screen, color, ((self.x + 10, self.y), (self.x + 20, self.y + 10), (self.x, self.y),
                                         (self.x + 20, self.y - 10), (self.x + 10, self.y)))
         screen.blit(self.get_text(color), (30, 6))
         pg.draw.rect(screen, color, (self.x - 5, self.y - 20, self.padding, 40), 2)
 
     def waiting(self):
+        """ Ничегонеделанье """
         if self.wait:
             if not self.clicked:
                 self.wait = False
                 self.click()
 
     def click(self):
+        """ Выполнение функциии """
         if self.function is not None:
             self.function()
 
     def is_clicked(self):
+        """ Проверка на нажатие """
         pos = pg.mouse.get_pos()
         self.hovered = False
 
@@ -49,6 +55,7 @@ class BackButton(StandardButton):
         super().is_clicked()
 
     def draw(self, screen):
+        """ Отрисовка """
         self.waiting()
         self.is_clicked()
         if not self.hovered:

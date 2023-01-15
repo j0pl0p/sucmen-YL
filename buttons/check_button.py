@@ -4,6 +4,7 @@ from buttons.standard_button import StandardButton
 
 
 class CheckButton(StandardButton):
+    """ Кнопка с галочкой """
     def __init__(self, x, y, width, height, image, scale=1, text='yes', function=None):
         super().__init__(x, y, width, height, image, scale, function)
         self.switch = True
@@ -13,10 +14,12 @@ class CheckButton(StandardButton):
         self.text = text
 
     def click(self):
+        """ Выполнение функции """
         super().click()
         self.switch = not self.switch
 
     def is_clicked(self):
+        """ Проверка на нажатие """
         pos = pygame.mouse.get_pos()
 
         if self.x < pos[0] < self.x + self.width * self.scale:
@@ -28,11 +31,13 @@ class CheckButton(StandardButton):
         super().is_clicked()
 
     def get_text(self):
+        """ Текст """
         font = pygame.font.SysFont('dejavuserif', 30 * self.scale)
         follow = font.render(self.text, True, (111, 111, 111), (0, 0, 0))
         return follow
 
     def draw(self, screen):
+        """ Отрисовка """
         self.is_clicked()
 
         if self.switch:

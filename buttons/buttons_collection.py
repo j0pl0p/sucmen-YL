@@ -11,6 +11,7 @@ class ButtonsCollection:
         self.prev_settings()
 
     def create_buttons(self):
+        """ Добавление кнопок в коллекцию """
         width, height = self.game.width, self.game.height
         scale = width / 800 * 1.5
 
@@ -31,22 +32,28 @@ class ButtonsCollection:
         return buttons
 
     def function_back(self):
-        self.game.set_window(self.game.WINDOW_MENU)
+        """ Возврат на окно настроек """
+        self.game.set_window(self.game.WINDOW_SETTINGS)
         self.game.settings.write_to_file()
 
     def function_cadillac(self):
+        """ Смена музыки на кадиллак """
         self.game.settings.song_change(self.game.settings.cadillac)
 
     def function_ice(self):
+        """ Смена музыки на айс """
         self.game.settings.song_change(self.game.settings.ice)
 
     def function_checkmark_music(self):
+        """ Музыка вкл/выкл """
         self.game.settings.music_change()
 
     def function_checkmark_sound(self):
+        """ Звуки вкл/выкл """
         self.game.settings.sound_change()
 
     def prev_settings(self):
+        """ Предыдущие настройки """
         self.buttons[0].switch = not self.game.settings.song
         self.buttons[1].switch = self.game.settings.song
         self.buttons[2].switch = self.game.settings.music
@@ -54,6 +61,7 @@ class ButtonsCollection:
 
 
 def new_button(x, y, image_path, pressed_image_path, scale, function):
+    """ Новая кнопка """
     img = pg.image.load(image_path).convert_alpha()
     img_pressed = pg.image.load(pressed_image_path).convert_alpha()
 
@@ -62,6 +70,7 @@ def new_button(x, y, image_path, pressed_image_path, scale, function):
 
 
 def new_checkmark(x, y, img_path, scale, text, function):
+    """ Кнопка-галочка """
     img = pg.image.load(img_path).convert_alpha()
     checkmark = CheckButton(x, y, 30, 30, img, int(scale), text, function)
     return checkmark

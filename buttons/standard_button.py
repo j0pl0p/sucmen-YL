@@ -12,9 +12,11 @@ class StandardButton:
         self.function = function
 
     def click(self):
+        """ Выполнение функции """
         if self.function is not None:
             self.function()
 
     def is_clicked(self):
+        """ Проверка на нажатие """
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
