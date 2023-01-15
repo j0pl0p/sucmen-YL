@@ -16,7 +16,6 @@ class DeathAnimationWindow(BaseWindow):
         super().__init__(game)
         self.name = None
 
-
     def update_start_time(self):
         self.time_start = datetime.now()
 

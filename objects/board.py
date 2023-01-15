@@ -8,7 +8,7 @@ import copy
 
 
 class Board(DrawableObject):
-    """ Класс новой карты """
+    """ Класс новой карты В РЕДАКТОРЕ """
     WIDTH = 28
     HEIGHT = 31
     CELL_SIZE = 18
@@ -61,6 +61,7 @@ class Board(DrawableObject):
         self.rect.height = len(self.boardfile) * self.CELL_SIZE
 
     def process_draw(self):
+        """ Отрисовка сетки """
         self.load_map()
         pygame.draw.rect(self.game.screen, '#363636', (self.left-1, self.top-1,
                                                     self.CELL_SIZE*self.WIDTH+2,
@@ -74,6 +75,7 @@ class Board(DrawableObject):
 
 
     def process_event(self, event):
+        """ Проверка изменить/стереть """
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 cell = self.get_cell(event.pos)
@@ -83,6 +85,7 @@ class Board(DrawableObject):
                 self.on_click(cell, mode=3)
 
     def get_cell(self, pos):
+        """ Получение координаты сетки """
         if self.rect.collidepoint(pos):
             return ((pos[0] - self.left) // self.CELL_SIZE,
                     (pos[1] - self.top) // self.CELL_SIZE)
@@ -90,6 +93,7 @@ class Board(DrawableObject):
             return None
 
     def on_click(self, cell, mode=1):
+        """ Изменение карты """
         if cell is not None:
             cx, cy = cell
             if not self.is_editable(cx, cy):
@@ -104,12 +108,14 @@ class Board(DrawableObject):
                 self.boardfile[cy][cx] = '3'
 
     def is_editable(self, x, y):
+        """ Проверка на домик мутантов и границы """
         if x not in [self.WIDTH-1, 0] and y not in [self.HEIGHT-1, 0]:
             if x not in range(10, 18) or y not in range(12, 17):
                 return True
         return False
 
     def load_map(self):
+        """ Загрузка карты из файла """
         viagra = pygame.image.load('data/images/drug.png')
         row = -1
         for line in self.boardfile:
@@ -129,19 +135,23 @@ class Board(DrawableObject):
                                                    self.top + self.CELL_SIZE * row+1))
 
     def save_map(self, file):
+        """ Сохранение карты в файл """
         for r in self.boardfile:
             file.write(''.join(r)+'\n')
         file.close()
         return True
 
     def clear_map(self):
+        """ Очистка карты """
         self.boardfile = copy.deepcopy(self.DEFAULT_MAP)
 
     def set_map(self, file):
+        """ Установка загруженной карты в сетку редактора """
         new_map = []
         for line in file.readlines():
             new_map.append(list(line.rstrip()))
         self.boardfile = new_map
 
     def get_seed(self):
+        """ Подсчёт майонеза на карте """
         return sum(line.count('2') for line in self.boardfile)

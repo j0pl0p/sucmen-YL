@@ -44,6 +44,7 @@ class Monster(ImageObject):
         self.initial_seed_count = self.field.get_seed_count()
 
     def process_move(self, coefficient=1):
+        """ Ход монстра """
         if self.direction is None:
             return
 
@@ -54,6 +55,7 @@ class Monster(ImageObject):
         )
 
     def get_possible_directions(self, is_state_changed=False):
+        """ Получение списка возможных направлений """
         if self.direction is None:
             return []
 
@@ -101,9 +103,11 @@ class Monster(ImageObject):
         return possible_directions
 
     def check_is_in_cell(self):
+        """ Проверка на нахождение в домике """
         return not ((self.rect.x - 10) % 18 or (self.rect.y - 10) % 18)
 
     def check_collisions(self):
+        """ Проверка на соприкосновения с объектами """
         for i in range(len(self.field.field)):
             for j in range(len(self.field.field[i])):
                 if type(self.field.field[i][j]) == Wall and self.rect.colliderect(self.field.field[i][j].rect):
@@ -113,9 +117,11 @@ class Monster(ImageObject):
         return 0
 
     def collide_with(self, other):
+        """ Проверка на соприкосновение с объектом """
         return self.rect.colliderect(other.rect)
 
     def get_next_direction(self):
+        """ Вычисление следующего направления """
         possible_directions = self.get_possible_directions()
         if not possible_directions:
             self.direction = None
@@ -140,10 +146,12 @@ class Monster(ImageObject):
         self.direction = best_direction
 
     def new_state(self, new_state):
+        """ Установка состояния """
         self.state_change_time = datetime.now()
         self.state = new_state
 
     def change_state(self):
+        """ Смена состояния """
         if self.state == self.BEGIN:
             if self.rect.x == self.aim_x and self.rect.y == self.aim_y:
                 self.new_state(self.WANDER)
@@ -175,6 +183,7 @@ class Monster(ImageObject):
                 self.new_state(self.WANDER)
 
     def choose_aim_position(self):
+        """ Выбор клетки, в которую нужно попасть """
         if self.state == self.STAY_IN:
             self.aim_x, self.aim_y = self.rect.x, self.rect.y
         elif self.state == self.BEGIN:
@@ -188,6 +197,7 @@ class Monster(ImageObject):
             self.aim_x, self.aim_y = 10 + 18 * randint(-100, 200), 10 + 18 * randint(-100, 200)
 
     def process_logic(self):
+        """ Вызов нужных методов """
         if self.check_is_in_cell():
             self.change_state()
             self.choose_aim_position()
@@ -195,6 +205,7 @@ class Monster(ImageObject):
         self.process_move()
 
     def process_draw(self, color=(255, 255, 255)):
+        """ Отрисовка """
         if self.direction and self.state != self.FRIGHTENED:
             self.image = pygame.image.load(self.IMAGES[self.direction])
             self.image = pygame.transform.scale(self.image, (18, 18))

@@ -17,17 +17,21 @@ class Larry(Monster):
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     def reset(self):
+        """ Сброс """
         super().__init__(self.filename, self.game, self.field, self.x, self.y)
         self.aim_default_x, self.aim_default_y = 10 + 18 * 50, 10 - 18 * 50
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     # подробнее на habr.com
     def check_cruise_elroy(self):
+        """ Смена cruise elroy. Подробнее на
+        https://habr.com/ru/post/109406/"""
         seed_count = self.field.get_seed_count()
         if seed_count / self.initial_seed_count <= 0.25:
             self.cruise_elroy_is_active = True
 
     def change_state(self):
+        """ Смена состояния """
         if self.state == self.STAY_IN:
             self.state = self.BEGIN
             self.direction = self.UP
@@ -36,6 +40,7 @@ class Larry(Monster):
 
     # позиция берётся из класса амняма хабиба и тд
     def choose_aim_position(self):
+        """ Выбор клетки-цели """
         if not self.cruise_elroy_is_active:
             self.check_cruise_elroy()
 
@@ -52,6 +57,7 @@ class Larry(Monster):
             super().choose_aim_position()
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw((227, 0, 27))
 
 
@@ -70,11 +76,13 @@ class Kissy(Monster):
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     def reset(self):
+        """ Сброс """
         super().__init__(self.filename, self.game, self.field, self.x, self.y)
         self.aim_default_x, self.aim_default_y = 10 - 18 * 50, 10 - 18 * 50
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     def change_state(self):
+        """ Смена состояния """
         if self.state == self.STAY_IN:
             self.state = self.BEGIN
             self.direction = self.UP
@@ -83,6 +91,7 @@ class Kissy(Monster):
 
     # позиция берётся из класса амняма хабиба и тд
     def choose_aim_position(self):
+        """ Выбор клетки-цели """
         if self.state == self.HUNT:
             player = self.game.windows[self.game.current_window_index].player
             sucmen_directions = {player.LEFT: [-4, 0], player.RIGHT: [4, 0], player.UP: [-4, -4], player.DOWN: [0, 4]}
@@ -92,6 +101,7 @@ class Kissy(Monster):
             super().choose_aim_position()
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw((255, 99, 178))
 
 
@@ -110,11 +120,13 @@ class Huggy(Monster):
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     def reset(self):
+        """ Сброс """
         super().__init__(self.filename, self.game, self.field, self.x, self.y)
         self.aim_default_x, self.aim_default_y = 10 - 18 * 50, 10 - 18 * 50
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 13, 10 + 18 * 11
 
     def change_state(self):
+        """ Смена состояния """
         if self.state == self.STAY_IN:
             self.state = self.BEGIN
             self.direction = self.UP
@@ -123,6 +135,7 @@ class Huggy(Monster):
 
     # позиция берётся из класса амняма хабиба и тд и ищо скарилари
     def choose_aim_position(self):
+        """ Выбор клетки-цели """
         if self.state == self.HUNT:
             player = self.game.windows[self.game.current_window_index].player
             larry = self.game.windows[self.game.current_window_index].monsters[0]
@@ -137,6 +150,7 @@ class Huggy(Monster):
             super().choose_aim_position()
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw((0, 254, 254))
 
 
@@ -155,11 +169,13 @@ class Wunk(Monster):
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 14, 10 + 18 * 11
 
     def reset(self):
+        """ Сброс """
         super().__init__(self.filename, self.game, self.field, self.x, self.y)
         self.aim_default_x, self.aim_default_y = 10 - 18 * 50, 10 + 18 * 50
         self.aim_begin_x, self.aim_begin_y = 10 + 18 * 14, 10 + 18 * 11
 
     def change_state(self):
+        """ Смена состояния """
         if self.state == self.STAY_IN:
             seed_count = self.field.get_seed_count()
             if seed_count / self.initial_seed_count < 2 / 3:
@@ -170,6 +186,7 @@ class Wunk(Monster):
 
     # позиция берётся из класса амняма хабиба и тд
     def choose_aim_position(self):
+        """ Выбор клетки-цели """
         if self.state == self.HUNT:
             player = self.game.windows[self.game.current_window_index].player
             distance = ((player.rect.x - self.rect.x) ** 2 + (player.rect.y - self.rect.y) ** 2) ** 0.5
@@ -182,4 +199,5 @@ class Wunk(Monster):
             super().choose_aim_position()
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw((255, 161, 1))

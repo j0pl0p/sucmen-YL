@@ -7,6 +7,7 @@ pygame.init()
 
 
 class ButtonObject(DrawableObject):
+    """ Класс кнопки """
     BUTTON_STYLE = {
         "hover_color": 'black',
         "clicked_color": 'black',
@@ -18,7 +19,7 @@ class ButtonObject(DrawableObject):
     def __init__(self, game, x, y, width, height, color, function, text):
         super().__init__(game)
         self.rect = pygame.rect.Rect(x, y, width, height)
-        self.button = ImportedButton((x, y, width, height), color, function, text=text, **self.BUTTON_STYLE)
+        self.button = ImportedButton((x, y, width, height), color, function, text=text, **self.BUTTON_STYLE) # загрузка скопированной кнопки
 
     def process_event(self, event):
         self.button.check_event(event)

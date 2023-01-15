@@ -4,6 +4,7 @@ from objects.base import DrawableObject
 
 
 class ImageObject(DrawableObject):
+    """ Объект картинки """
     def __init__(self, game, filename=None, x=None, y=None):
         super().__init__(game)
         if filename:

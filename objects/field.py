@@ -5,6 +5,7 @@ from objects.mayonnaise import Mayo, Viagra
 
 
 class Field(DrawableObject):
+    """ Класс карты В ИГРЕ """
     CELL_WIDTH = 18
     FIELD_CELLS = {'0': Empty,
                    '1': Wall,
@@ -23,6 +24,7 @@ class Field(DrawableObject):
         self.rect.height = len(self.field) * self.CELL_WIDTH
 
     def load_map(self):
+        """ Загрузка карты из файла """
         with open(self.map_filename, 'r') as f:
             row_index = 0
             for line in f:
@@ -35,9 +37,6 @@ class Field(DrawableObject):
                         row.append(cell_classname(game=self.game,
                                                   x=self.rect.x + self.CELL_WIDTH * col_index,
                                                   y=self.rect.y + self.CELL_WIDTH * row_index))
-                    # else:
-                    #     print(f'Файл {self.map_filename} содержит недопустимые символы!')
-                    #     sys.exit()
                     col_index += 1
                 row_index += 1
                 self.field.append(row)
@@ -48,6 +47,7 @@ class Field(DrawableObject):
                                                        y=self.rect.y + self.CELL_WIDTH * row_index)
 
     def get_seed_count(self):
+        """ Подсчёт оставшегося майонеза на карте """
         count = 0
         for row in self.field:
             for obj in row:
@@ -56,6 +56,7 @@ class Field(DrawableObject):
         return count
 
     def process_draw(self):
+        """ Отрисовка каждого объекта на карте """
         for row in self.field:
             for item in row:
                 if item:

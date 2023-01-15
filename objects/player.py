@@ -7,6 +7,7 @@ from system.sound_manager import Sounds
 
 
 class Player(ImageObject):
+    """ Игрок """
     filename = 'data/images/player/right/1.png'
     image = pygame.image.load(filename)
     RIGHT, LEFT, UP, DOWN = 1, 2, 3, 4
@@ -39,6 +40,7 @@ class Player(ImageObject):
         self.bad_trip_active = False
 
     def step(self, back=False):
+        """ Шаг на одну клетку """
         if not back:
             directions = Player.DEFAULT_DIRECTIONS
             if not self.can_move:
@@ -57,16 +59,19 @@ class Player(ImageObject):
         )
 
     def reset_position(self, x = 18 * 15, y = 18 * 24, direction = RIGHT):
+        """ Сбросить позицию игрока """
         self.rect.centerx = x
         self.rect.centery = y
         self.direction = direction
         self.next_direction = direction
 
     def check_borders(self):
+        """ Проверка на границы """
         if self.rect.left < 0 or self.rect.right > self.game.size[0] or self.rect.top < 0 or self.rect.bottom > self.game.size[1]:
             self.reset_position()
 
     def collide(self):
+        """ Проверка на столкновение с различными объектами и взаимодействие с ними """
         near_positions = [
             [self.current_cell[0]-1, self.current_cell[1]],
             [self.current_cell[0]+1, self.current_cell[1]],
@@ -105,6 +110,7 @@ class Player(ImageObject):
                             self.reset_position(18 * 27, 18 * 15, self.LEFT)
 
     def change_direction(self):
+        """ Смена направления, в которое пойдет игрок """
         dir = {
             self.RIGHT: pygame.Rect(self.rect.x + 5, self.rect.y, self.rect.w, self.rect.h),
             self.LEFT: pygame.Rect(self.rect.x - 5, self.rect.y, self.rect.w, self.rect.h),
@@ -119,6 +125,7 @@ class Player(ImageObject):
         self.direction = self.next_direction
 
     def animation(self):
+        """ Анимация """
         if not self.bad_trip_active:
             if not self.can_move:
                 self.image = self.cur_images[self.direction][1]
@@ -132,6 +139,7 @@ class Player(ImageObject):
             self.image = pygame.image.load('data/images/player/rage.png')
 
     def process_logic(self):
+        """ Вызов всех функций """
         self.change_direction()
         self.collide()
         self.step()
@@ -140,6 +148,7 @@ class Player(ImageObject):
         self.get_current_cell()
 
     def process_event(self, event):
+        """ Обработка нажатий """
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_RIGHT:
@@ -153,6 +162,7 @@ class Player(ImageObject):
         self.can_move = True
 
     def process_draw(self):
+        """ Отрисовка """
         super(Player, self).process_draw()
 
         # if self.field:
@@ -166,6 +176,7 @@ class Player(ImageObject):
         #                                                   self.field.CELL_WIDTH], 2)
 
     def get_current_cell(self):
+        """ Получение клетки в которой находится игрок """
         cell_column = (self.rect.centerx - self.field.rect.x) // self.field.CELL_WIDTH
         cell_row = (self.rect.centery - self.field.rect.y) // self.field.CELL_WIDTH
         self.current_cell = [cell_column, cell_row]

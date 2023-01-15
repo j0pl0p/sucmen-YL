@@ -5,6 +5,7 @@ from datetime import datetime
 
 
 class KursorObject(TextObject):
+    """ Класс курсора для ввода имени """
     def __init__(self, game, x, y, text='_', color=pygame.color.Color(255, 255, 255)):
         super().__init__(game, x, y, text, color)
         self.update_start_time()
@@ -12,9 +13,11 @@ class KursorObject(TextObject):
         self.time_start = datetime.now()
 
     def update_start_time(self):
+        """ Установка времени """
         self.time_start = datetime.now()
 
     def process_logic(self):
+        """ Мигание """
         time_current = datetime.now()
         if (time_current - self.time_start).seconds % 2 == 0:
             self.visible = True
@@ -22,5 +25,6 @@ class KursorObject(TextObject):
             self.visible = False
 
     def process_draw(self):
+        """ Отрисовка """
         if self.visible:
             self.game.screen.blit(self.surface, self.rect)
