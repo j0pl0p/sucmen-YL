@@ -11,6 +11,7 @@ RED = pygame.color.Color(255, 0, 0)
 
 
 class HighscoreWindow(BaseWindow):
+    """ Окно с таблицей рекордов """
     def __init__(self, game, score):
         super().__init__(game)
         self.game = game
@@ -25,17 +26,21 @@ class HighscoreWindow(BaseWindow):
         self.objects.append(TextObject(self.game, self.game.width // 2 + 200, 90, 'Очки:', RED))
 
     def back_to_menu(self):
+        """ Переход в главное меню """
         self.game.set_window(self.game.WINDOW_MENU)
         self.highscore.save_to_file()
 
     def reset_highscores(self):
+        """ Сброс рекордов """
         self.highscore.clean_all_results()
 
     def add(self):
+        """ Добавление нового рекорда """
         self.highscore.add_new_result(self.game.player_name, self.score.current_points())
         self.highscore.save_to_file()
 
     def update(self):
+        """ Обновление """
         self.highscore.load_from_file()
         self.arr = self.highscore.highscores
         self.objects = self.objects[:4]
@@ -44,9 +49,11 @@ class HighscoreWindow(BaseWindow):
             self.objects.append(TextObject(self.game, self.game.width // 2 + 200, i * 38 + 140, str(self.arr[i][1]), RED))
 
     def process_logic(self):
+        """ Логика """
         self.update()
 
     def process_event(self, event):
+        """ Обработка нажатий """
         super().process_event(event)
         if event.type != pygame.KEYDOWN:
             return

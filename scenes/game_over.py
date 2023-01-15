@@ -8,7 +8,7 @@ from objects.image import ImageObject
 
 
 class GameOverWindow(BaseWindow):
-    """ Ввод имени для таблицы рекордов """
+    """ Game Over """
     text_format = 'Game over ({})'
     seconds_to_end = 3
 
@@ -20,15 +20,19 @@ class GameOverWindow(BaseWindow):
         self.update_start_time()
 
     def get_gameover_text_formatted(self):
+        """ Форматирование текста """
         return self.text_format.format(self.seconds_to_end - self.last_seconds_passed)
 
     def on_activate(self):
+        """ Установка времени """
         self.update_start_time()
 
     def update_start_time(self):
+        """ Обновление времени """
         self.time_start = datetime.now()
 
     def process_logic(self):
+        """ Логика объектов """
         time_current = datetime.now()
         seconds_passed = (time_current - self.time_start).seconds
         if self.last_seconds_passed != seconds_passed:

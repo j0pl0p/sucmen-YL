@@ -10,16 +10,14 @@ from system.sound_manager import Sounds
 
 
 class DeathAnimationWindow(BaseWindow):
-    """ чоо """
+    """ Окно анимации проигрыша """
 
     def __init__(self, game):
         super().__init__(game)
         self.name = None
 
-    def update_start_time(self):
-        self.time_start = datetime.now()
-
     def process_logic(self):
+        """ Сама анимация """
         Sounds.pause()
         img1 = pygame.image.load(f'data/images/{self.name}_anim/{self.name} (1).png')
         self.game.screen.blit(img1, (0, 67))
@@ -46,5 +44,6 @@ class DeathAnimationWindow(BaseWindow):
         self.game.set_window(self.game.WINDOW_GAMEOVER)
 
     def set_killer(self, killer):
+        """ Установка нужного мутанта (цветов) """
         if killer is not None:
             self.name = killer

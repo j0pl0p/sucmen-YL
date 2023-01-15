@@ -28,6 +28,7 @@ class GameWindow(BaseWindow):
         self.huggy_bounty = 200
 
     def process_logic(self):
+        """ Логика объектов """
         if not self.start:
             return
         super().process_logic()
@@ -51,6 +52,7 @@ class GameWindow(BaseWindow):
             # self.reset()
 
     def process_event(self, event):
+        """ Обработка клавиш """
         super().process_event(event)
         if event.type != pygame.KEYDOWN:
             return
@@ -63,6 +65,7 @@ class GameWindow(BaseWindow):
             self.game.set_window(self.game.WINDOW_PAUSE)
 
     def process_draw(self):
+        """ Отрисовка объектов """
         super().process_draw()
         text1 = TextObject(self.game, 600, 100, '1UP', pygame.Color('white'))
         text2 = TextObject(self.game, 600, 140, str(self.score.current_points()), pygame.Color('white'))
@@ -76,6 +79,7 @@ class GameWindow(BaseWindow):
             text3.process_draw()
 
     def on_activate(self):
+        """ Выбор нужной музыки """
         super().on_activate()
         self.start = False
         if self.game.settings.music:
@@ -83,6 +87,7 @@ class GameWindow(BaseWindow):
                 Sounds.play_song('ice' if self.game.settings.song == 1 else 'cadillac')
 
     def reset(self):
+        """ Сброс всего """
         self.score.reset()
         self.field.load_map()
         self.player.reset_position()

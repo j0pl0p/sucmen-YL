@@ -27,14 +27,18 @@ class SettingsWindow(BaseWindow):
         self.objects.append(btn_back)
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw()
         self.game.screen.blit(self.surface, (0, 0))
 
     def open_morgen(self):
+        """ Переход на окно с моргенштерном """
         self.game.set_window(self.game.WINDOW_MORGEN)
 
     def open_editor(self):
+        """ Переход на окно редактора уровней """
         self.game.set_window(self.game.WINDOW_LEVELEDITOR)
 
     def back(self):
+        """ Переход в главное меню """
         self.game.set_window(self.game.WINDOW_MENU)

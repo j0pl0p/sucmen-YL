@@ -14,6 +14,7 @@ class PauseWindow(BaseWindow):
         self.objects.append(ButtonObject(self.game, self.game.width // 2 - 100, self.game.height // 2, 200, 50, (0, 0, 0), self.quit, text='Выйти в меню'))
 
     def process_event(self, event):
+        """ Обработка нажатий """
         super().process_event(event)
         if event.type != pygame.KEYDOWN:
             return
@@ -21,9 +22,11 @@ class PauseWindow(BaseWindow):
             self.game.set_window(self.game.WINDOW_GAME)
 
     def resume(self):
+        """ Возобновление игры """
         self.game.set_window(self.game.WINDOW_GAME)
 
     def quit(self):
+        """ Выход """
         if Sounds.current_song() == 'rage':
             Sounds.stop_rage()
         self.game.set_window(self.game.WINDOW_MENU)

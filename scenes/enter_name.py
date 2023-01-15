@@ -6,6 +6,7 @@ from scenes.base import BaseWindow
 
 
 class EnterNameWindow(BaseWindow):
+    """ Окно ввода имени """
     MAX_LEN = 10
 
     def __init__(self, game):
@@ -18,6 +19,7 @@ class EnterNameWindow(BaseWindow):
         self.objects.append(KursorObject(self.game, self.game.width // 2 + self.objects[1].rect.w + 2, self.game.height // 2, '_', WHITE))
 
     def process_event(self, event):
+        """ Обработка клавиш """
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_RETURN:
@@ -38,5 +40,6 @@ class EnterNameWindow(BaseWindow):
             self.objects[3].move_center(self.objects[1].rect.right + self.objects[3].rect.w // 2, self.game.height // 2)
 
     def process_draw(self):
+        """ Отрисовка """
         for object in self.objects:
             object.process_draw()

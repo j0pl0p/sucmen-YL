@@ -11,6 +11,7 @@ SAVE_PATH = 'data.txt'
 
 
 class Settings:
+    """ Настройки """
     ice = 1
     cadillac = 0
     save_file = SETTINGS_PATH
@@ -32,26 +33,33 @@ class Settings:
 
     @property
     def song(self):
+        """ Музыка """
         return self.storage['song']
 
     @property
     def music(self):
+        """ Музыка """
         return self.storage['music']
 
     @property
     def sound(self):
+        """ Звук """
         return self.storage['sound']
 
     def write_to_file(self):
+        """ Сохранение настроек """
         with open(self.save_file, 'w') as fp:
             json.dump(self.storage, fp, indent=4)
 
     def music_change(self):
+        """ Смена музыки """
         self.storage['music'] = not self.music
 
     def sound_change(self):
+        """ Смена звука """
         self.storage['sound'] = not self.sound
 
     def song_change(self, song):
+        """ Смена музыки """
         self.storage['song'] = song
 

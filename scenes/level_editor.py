@@ -36,18 +36,23 @@ class LevelEditorWindow(BaseWindow):
                              btn_save, btn_clear, btn_back, btn_load, btn_play])
 
     def change_to_empty(self):
+        """ Смена режима редактора """
         self.board.MODE = 'empty'
 
     def change_to_wall(self):
+        """ Смена режима редактора """
         self.board.MODE = 'wall'
 
     def change_to_mayo(self):
+        """ Смена режима редактора """
         self.board.MODE = 'mayo'
 
     def change_to_viagra(self):
+        """ Смена режима редактора """
         self.board.MODE = 'viagra'
 
     def save_map(self):
+        """ Сохранение карты """
         name = 'map?.txt'
         i = 1
         while os.path.exists(f'maps/{name.replace("?", str(i))}'):
@@ -57,12 +62,15 @@ class LevelEditorWindow(BaseWindow):
                 print(f'new map file: {name.replace("?", str(i))}')
 
     def back(self):
+        """ Переход на окно настроек """
         self.game.set_window(self.game.WINDOW_SETTINGS)
 
     def clear_map(self):
+        """ Очистка карты """
         self.board.clear_map()
 
     def load(self):
+        """ Загрузка файла с помощью диалогового окна tkinter """
         top = tkinter.Tk()
         top.withdraw()
         file_name = tkinter.filedialog.askopenfilename(parent=top)
@@ -72,6 +80,7 @@ class LevelEditorWindow(BaseWindow):
                 self.board.set_map(file)
 
     def play(self):
+        """ Запуск игры """
         if not self.board.get_seed():
             print('Добавьте майонезу чтобы начать')
             return

@@ -13,6 +13,7 @@ class MorgenWindow(BaseWindow):
         self.buttons = ButtonsCollection(game)
 
     def process_event(self, event):
+        """ Обработка нажатий """
         super().process_event(event)
         if event.type != pygame.KEYDOWN:
             return
@@ -21,6 +22,7 @@ class MorgenWindow(BaseWindow):
             self.game.sound.mus_switch()
 
     def process_draw(self):
+        """ Отрисовка """
         self.buttons.prev_settings()
         super().process_draw()
         for btn in self.buttons.buttons:

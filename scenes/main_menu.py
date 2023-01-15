@@ -33,19 +33,24 @@ class MenuWindow(BaseWindow):
             Sounds.play_song('mainmenu')
 
     def process_draw(self):
+        """ Отрисовка """
         super().process_draw()
         self.game.screen.blit(self.surface, (0, 0))
 
     def start_game(self):
+        """ Начало игры """
         self.game.set_window(self.game.WINDOW_GAME)
 
     def open_settings(self):
+        """ Открытие настроек """
         self.game.set_window(self.game.WINDOW_SETTINGS)
 
     def open_highscores(self):
+        """ Открытие таблицы рекордов"""
         self.game.set_window(self.game.WINDOW_HIGHSCORE)
 
     def on_activate(self):
+        """ Музыка вкл/выкл """
         self.game.score.reset()
         self.game.windows[self.game.WINDOW_GAME] = GameWindow(self.game, self.game.score)
         if self.game.settings.music:
